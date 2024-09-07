@@ -11,16 +11,24 @@ const aFaire = [
 ]
 function App() {
 
-  const handleClick = () => {
-    console.log();
-    alert("J'ai cliqué sur le titre")
-  }
+ const [person, setPerson] = useState({
+  firstName: "John",
+  secondName: "Doe",
+  age: 18,
+ })
+ const [count,setCount] = useState(0)
+
+ const incrementAge = () => {
+  setPerson({...person,age: person.age+1})
+ }
+ const incrementCount = () => {
+  setCount(count+1)
+ }
+
   return <>
-  <h1 onClick={handleClick}  className='Title' style={{color:'red', backgroundColor:'blue'}}>{title}</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet veniam quasi tempore, nulla quidem commodi, facere ab dolorem enim nisi quibusdam. Nostrum rerum facilis reiciendis veritatis quisquam saepe quis quas?</p>
-    <ul>
-      {aFaire.map(faire => (<li key={faire}>{faire}</li>))}
-    </ul>
+    <p>Age de John : {person.age}</p>
+    <button onClick={incrementAge}>Gagner une année</button>
+    <button onClick={incrementCount}>Incrémentation de {count}</button>
 
 
 
