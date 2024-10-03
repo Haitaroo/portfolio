@@ -20,7 +20,7 @@ body {
 }
 
 .desktop {
-  flex: 1;
+  flex: 1; /* Prendre tout l'espace disponible */
   display: flex;
   flex-wrap: wrap; /* Permet de passer à la ligne suivante quand l'espace est plein */
   justify-content: flex-start; /* Aligne les icônes à gauche */
@@ -28,7 +28,71 @@ body {
   padding: 10px; /* Ajoute un peu d'espace autour du bureau */
 }
 
-.selected {
-  border: 2px dashed #ffffff; /* Bordure pour indiquer que l'icône est sélectionnée */
-  opacity: 0.8; /* Rendre l'icône un peu transparente */
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s;
+  width: 80px; /* Largeur de l'icône */
+  text-align: center;
+  margin: 10px; /* Espace entre les icônes */
+}
+
+.desktop-icon img {
+  width: 48px; /* Taille de l'image */
+  height: 48px; /* Taille de l'image */
+}
+
+.desktop-icon:hover {
+  transform: scale(1.1); /* Agrandir légèrement l'icône lors du survol */
+  background-color: rgba(255, 255, 255, 0.1); /* Couleur de fond légèrement transparente lors du survol */
+  border-radius: 5px; /* Coins arrondis pour un effet visuel plus agréable */
+}
+
+.desktop-icon-label {
+  font-family: 'Segoe UI', sans-serif;
+  margin-top: 5px; /* Espacement entre l'icône et le texte */
+  font-size: 12px; /* Taille du texte */
+  color: #ffffff; /* Couleur du texte */
+  text-align: center; /* Centre le texte */
+  opacity: 0.8; /* Légèrement transparent par défaut */
+  transition: opacity 0.2s; /* Transition pour l'effet d'opacité */
+}
+
+.desktop-icon:hover .desktop-icon-label {
+  opacity: 1; /* Rendre le texte complètement visible lors du survol */
+}
+
+/* Responsive styles */
+@media (max-width: 480px) {
+  .desktop {
+    justify-content: center; /* Centre les icônes sur mobile */
+    align-items: center; /* Centre les icônes sur mobile */
+  }
+
+  .desktop-icon {
+    width: calc(50% - 20px); /* Deux icônes par ligne sur mobile */
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .desktop {
+    justify-content: center; /* Centre les icônes sur tablette */
+    align-items: center; /* Centre les icônes sur tablette */
+  }
+
+  .desktop-icon {
+    width: calc(25% - 20px); /* Quatre icônes par ligne sur tablette */
+  }
+}
+
+@media (min-width: 769px) {
+  .desktop {
+    justify-content: center; /* Centre les icônes sur ordinateur */
+    align-items: center; /* Centre les icônes sur ordinateur */
+  }
+
+  .desktop-icon {
+    width: calc(25% - 20px); /* Quatre icônes par ligne sur ordinateur */
+  }
 }

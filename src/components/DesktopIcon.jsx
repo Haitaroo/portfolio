@@ -1,25 +1,22 @@
-import React from 'react';
+import React, { forwardRef, useRef } from 'react';
 import Draggable from 'react-draggable';
 import './DesktopIcon.css';
 
-const DesktopIcon = ({ id, onSelect, selected, label, image }) => {
-    const handleMouseDown = (e) => {
-        e.preventDefault();
-        onSelect(id); // Appelle la fonction de sélection
-    };
+const DesktopIcon = forwardRef(({ id, label, image, onClick }, ref) => {
+    const iconRef = useRef(null);
 
     return (
-        <Draggable>
+        <Draggable nodeRef={iconRef}>
             <div 
-                className={`desktop-icon ${selected ? 'selected' : ''}`} 
-                onMouseDown={handleMouseDown}
-                style={{ cursor: 'default' }} // Garde le curseur par défaut
+                className="desktop-icon" 
+                onClick={onClick}
+                ref={iconRef} // Assurez-vous d'utiliser nodeRef ici
             >
                 <img src={image} alt={label} />
                 <div className="desktop-icon-label">{label}</div>
             </div>
         </Draggable>
     );
-};
+});
 
 export default DesktopIcon;
