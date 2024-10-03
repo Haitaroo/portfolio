@@ -20,8 +20,15 @@ body {
 }
 
 .desktop {
-  flex: 1; /* Prendre tout l'espace disponible */
+  flex: 1;
   display: flex;
-  justify-content: center; /* Centrer le contenu horizontalement */
-  align-items: center; /* Centrer le contenu verticalement */
+  flex-wrap: wrap; /* Permet de passer à la ligne suivante quand l'espace est plein */
+  justify-content: flex-start; /* Aligne les icônes à gauche */
+  align-items: flex-start; /* Aligne les icônes en haut */
+  padding: 10px; /* Ajoute un peu d'espace autour du bureau */
+}
+
+.selected {
+  border: 2px dashed #ffffff; /* Bordure pour indiquer que l'icône est sélectionnée */
+  opacity: 0.8; /* Rendre l'icône un peu transparente */
 }

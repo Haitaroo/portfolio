@@ -1,14 +1,22 @@
 import React from 'react';
-import Draggable from 'react-draggable'; // Import de react-draggable
+import Draggable from 'react-draggable';
 import './DesktopIcon.css';
-import iconImage from '../assets/img/github.png';  // Chemin vers l'icône
 
-const DesktopIcon = () => {
+const DesktopIcon = ({ id, onSelect, selected, label, image }) => {
+    const handleMouseDown = (e) => {
+        e.preventDefault();
+        onSelect(id); // Appelle la fonction de sélection
+    };
+
     return (
         <Draggable>
-            <div className="desktop-icon">
-                <img src={iconImage} alt="Github" />
-                <div className="desktop-icon-label">Mon Github</div>
+            <div 
+                className={`desktop-icon ${selected ? 'selected' : ''}`} 
+                onMouseDown={handleMouseDown}
+                style={{ cursor: 'default' }} // Garde le curseur par défaut
+            >
+                <img src={image} alt={label} />
+                <div className="desktop-icon-label">{label}</div>
             </div>
         </Draggable>
     );
