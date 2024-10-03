@@ -1,26 +1,19 @@
 .desktop-icon {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centre les éléments */
-    cursor: pointer; /* Change le curseur au survol */
-    margin: 10px; /* Espacement entre les icônes */
+    align-items: center;
+    cursor: move; /* Affiche un curseur de déplacement */
+    position: absolute; /* Pour permettre le déplacement sur toute la zone */
 }
 
-.icon-image {
-    width: 64px; /* Ajustez la taille de l'icône */
-    height: 64px; /* Ajustez la taille de l'icône */
-    border: 2px solid #0078d7; /* Bordure bleu pour l'icône */
-    border-radius: 4px; /* Coins arrondis */
-    transition: transform 0.2s; /* Animation de transition */
-}
-
-.icon-image:hover {
-    transform: scale(1.1); /* Zoom au survol */
+.desktop-icon img {
+    width: 48px;
+    height: 48px;
 }
 
 .desktop-icon-label {
-    margin-top: 5px; /* Espacement entre l'icône et le texte */
-    font-size: 14px; /* Taille du texte */
-    color: #ffffff; /* Couleur du texte */
-    text-align: center; /* Centre le texte */
+    margin-top: 5px;
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
 }
