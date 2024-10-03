@@ -1,14 +1,23 @@
 /* App.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Empêche le scroll */
+}
+
+body {
+  background-image: url('./assets/images/background.png'); /* Chemin vers ton image */
+  background-size: cover; /* L'image prend toute la place disponible */
+  background-position: center; /* Centre l'image */
+  background-repeat: no-repeat; /* Empêche la répétition de l'image */
+}
+
 .app {
   display: flex;
   flex-direction: column;
   height: 100vh; /* Prendre toute la hauteur de la fenêtre */
-  background-image: url('./assets/images/background.png'); /* Chemin vers ton image */
-  background-size: cover; /* Ajuster l'image pour couvrir tout l'écran */
-  background-position: center; /* Centrer l'image */
-  background-repeat: no-repeat; /* Ne pas répéter l'image */
 }
-
 
 .desktop {
   flex: 1; /* Prendre tout l'espace disponible */
