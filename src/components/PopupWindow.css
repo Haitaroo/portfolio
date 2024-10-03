@@ -38,8 +38,9 @@
   color: white;
   font-size: 16px;
   cursor: pointer;
-  padding: 10px; /* Augmenter la zone cliquable */
+  padding: 10px;
   transition: color 0.3s;
+  pointer-events: auto; /* Assure que le bouton reçoit bien les événements de clic */
 }
 
 .popup-header button:hover {
@@ -77,13 +78,22 @@
   }
 
   .popup-header button {
-    font-size: 20px; /* Augmenter la taille de la police pour les appareils mobiles */
-    padding: 15px; /* Augmenter la zone cliquable */
+    font-size: 20px;
+    padding: 15px;
   }
 }
 
 @media (max-width: 480px) {
   .popup-window {
     width: 90%;
+  }
+
+  .popup-header {
+    padding: 15px;
+  }
+
+  .popup-header button {
+    font-size: 24px; /* Augmenter encore la taille de la police sur les très petits écrans */
+    padding: 20px; /* Augmenter la zone cliquable */
   }
 }

@@ -4,7 +4,6 @@ import './PopupWindow.css';
 
 const PopupWindow = ({ title, content, onClose, initialPosition }) => {
   return (
-    <Draggable handle=".popup-header" defaultPosition={initialPosition}>
       <div className="popup-window">
         <div className="popup-header">
           <span>{title}</span>
@@ -14,7 +13,6 @@ const PopupWindow = ({ title, content, onClose, initialPosition }) => {
           {content}
         </div>
       </div>
-    </Draggable>
   );
 };
 

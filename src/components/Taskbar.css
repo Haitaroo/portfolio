@@ -1,5 +1,5 @@
+/* Styles pour la barre des tâches */
 .taskbar {
-<<<<<<< HEAD
   position: fixed;
   bottom: 0;
   left: 0;
@@ -12,6 +12,7 @@
   align-items: center;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
+  z-index: 1000; /* Assurer que la barre est au-dessus des autres éléments */
 }
 
 .taskbar-left {
@@ -115,7 +116,13 @@
 @media (max-width: 480px) {
   .taskbar {
     height: 40px;
-    flex-direction: column;
+    justify-content: center;
+  }
+
+  .taskbar-search,
+  .taskbar-time,
+  .taskbar-right {
+    display: none;
   }
 
   .taskbar-icons {
@@ -123,19 +130,9 @@
     justify-content: center;
   }
 
-  .taskbar-right {
-    flex-direction: row;
-    justify-content: center;
-    margin-right: 0;
-  }
-
   .taskbar-icon img {
-    width: 20px;
-    height: 20px;
-  }
-
-  .taskbar-time {
-    font-size: 10px;
+    width: 35px; /* Tailles des icônes ajustées pour mobile */
+    height: 35px;
   }
 }
 
@@ -170,19 +167,4 @@
   .weather-widget.weather-error {
     display: none;
   }
-}
-
-/* Styles pour la barre des tâches */
-.taskbar {
-  background-color: #3b3b3b; /* Couleur de fond */
-  color: white; /* Couleur du texte */
-  height: 50px; /* Hauteur de la barre */
-  display: flex; /* Utilisation de Flexbox */
-  align-items: center; /* Centrer verticalement le contenu */
-  padding: 0 20px; /* Espacement horizontal */
-  position: fixed; /* Fixer la barre en bas */
-  bottom: 0; /* Positionner en bas */
-  left: 0; /* Positionner à gauche */
-  width: 100%; /* Prendre toute la largeur de la fenêtre */
-  z-index: 1000; /* Assurer que la barre est au-dessus des autres éléments */
 }
