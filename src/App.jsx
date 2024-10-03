@@ -25,6 +25,7 @@ const App = () => {
     { id: 'realisations', label: 'Mes réalisations', image: realisationIcon },
   ]);
 
+<<<<<<< HEAD
   const contentMap = {
     github: { title: 'Mon Github', content: <p>Voici le lien vers mon GitHub.</p> },
     CV: { title: 'Mon CV', content: <p>Voici mon CV en PDF.</p> },
@@ -33,6 +34,26 @@ const App = () => {
     sociaux: { title: 'Mes réseaux sociaux', content: <p>Liens vers mes réseaux sociaux.</p> },
     realisations: { title: 'Mes réalisations', content: <p>Liens vers mes dernieres réalisations.</p> },
   };
+=======
+ const [person, setPerson] = useState({
+  firstName: "John",
+  secondName: "Doe",
+  age: 18,
+ })
+ const [count,setCount] = useState(0)
+
+ const incrementAge = () => {
+  setPerson({...person,age: person.age+1})
+ }
+ const incrementCount = () => {
+  setCount(count+1)
+ }
+
+  return <>
+    <p>Age de John : {person.age}</p>
+    <button onClick={incrementAge}>Gagner une année</button>
+    <button onClick={incrementCount}>Incrémentation de {count}</button>
+>>>>>>> 068c698 (Test de fonction d'incrémentation dans des tableaux)
 
   const openPopup = (iconId) => {
     const { title, content } = contentMap[iconId];
