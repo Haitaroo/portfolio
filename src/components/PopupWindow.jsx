@@ -4,9 +4,9 @@ import './PopupWindow.css';
 
 const PopupWindow = ({ title, content, onClose, initialPosition }) => {
   return (
-    <Draggable handle=".draggable-handle" defaultPosition={initialPosition}>
+    <Draggable handle=".popup-header" defaultPosition={initialPosition}>
       <div className="popup-window">
-        <div className="draggable-handle">
+        <div className="popup-header">
           <span>{title}</span>
           <button onClick={onClose} className="close-button">X</button>
         </div>
