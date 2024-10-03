@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import WeatherWidget from './WeatherWidget';
 import './Taskbar.css';
@@ -60,8 +61,22 @@ const Taskbar = ({ icons, onIconClick, onSearch }) => {
           <span>{time.toLocaleDateString()}</span>
         </div>
       </div>
+=======
+import React from 'react';
+import './Taskbar.css'; // Si tu veux ajouter un style
+
+const Taskbar = () => {
+  return (
+    <div className="taskbar">
+      <h3>Barre des tâches</h3>
+      {/* Ajoute ici les icônes ou autres éléments */}
+>>>>>>> c5c1926 (Fix deployment setup)
     </div>
   );
 };
 
+<<<<<<< HEAD
 export default Taskbar;
+=======
+export default Taskbar;
+>>>>>>> c5c1926 (Fix deployment setup)

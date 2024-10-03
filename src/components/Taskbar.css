@@ -1,4 +1,5 @@
 .taskbar {
+<<<<<<< HEAD
   position: fixed;
   bottom: 0;
   left: 0;
@@ -169,4 +170,17 @@
   .weather-widget.weather-error {
     display: none;
   }
+=======
+    background-color: #3b3b3b; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    height: 50px; /* Hauteur de la barre */
+    display: flex; /* Utilisation de Flexbox */
+    align-items: center; /* Centrer verticalement le contenu */
+    padding: 0 20px; /* Espacement horizontal */
+    position: fixed; /* Fixer la barre en bas */
+    bottom: 0; /* Positionner en bas */
+    left: 0; /* Positionner à gauche */
+    width: 100%; /* Prendre toute la largeur de la fenêtre */
+    z-index: 1000; /* Assurer que la barre est au-dessus des autres éléments */
+>>>>>>> c5c1926 (Fix deployment setup)
 }

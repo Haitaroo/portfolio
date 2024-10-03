@@ -23,4 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 dev/
+<<<<<<< HEAD
 .env
+=======
+>>>>>>> c5c1926 (Fix deployment setup)
