@@ -1,12 +1,11 @@
 import React, { forwardRef, useRef } from 'react';
-import Draggable from 'react-draggable';
 import './DesktopIcon.css';
 
 const DesktopIcon = forwardRef(({ id, label, image, onClick }, ref) => {
     const iconRef = useRef(null);
 
     return (
-        <Draggable nodeRef={iconRef}>
+        // <Draggable nodeRef={iconRef}>
             <div 
                 className="desktop-icon" 
                 onClick={onClick}
@@ -15,7 +14,7 @@ const DesktopIcon = forwardRef(({ id, label, image, onClick }, ref) => {
                 <img src={image} alt={label} />
                 <div className="desktop-icon-label">{label}</div>
             </div>
-        </Draggable>
+        // </Draggable>
     );
 });
 

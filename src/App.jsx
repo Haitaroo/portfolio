@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Taskbar from './components/Taskbar';
 import DesktopIcon from './components/DesktopIcon';
-import PopupWindow from './components/PopupWindow'; 
+import PopupWindow from './components/PopupWindow';
+import ContactForm from './components/ContactForm.jsx';
 import './App.css';
 import githubIcon from './assets/img/github.png';
 import cvIcon from './assets/img/cv.png';
 import infoIcon from './assets/img/Info.png';
 import contactIcon from './assets/img/contact.png';
 import sociauxIcon from './assets/img/sociaux.png';
+import realisationIcon from './assets/img/realisations.png';
 
 const App = () => {
   const [popup, setPopup] = useState({ isOpen: false, title: '', content: null, position: { top: 100, left: 100 } });
@@ -20,14 +22,16 @@ const App = () => {
     { id: 'info', label: 'Qui suis-je', image: infoIcon },
     { id: 'contact', label: 'Me contacter', image: contactIcon },
     { id: 'sociaux', label: 'Mes réseaux sociaux', image: sociauxIcon },
+    { id: 'realisations', label: 'Mes réalisations', image: realisationIcon },
   ]);
 
   const contentMap = {
     github: { title: 'Mon Github', content: <p>Voici le lien vers mon GitHub.</p> },
     CV: { title: 'Mon CV', content: <p>Voici mon CV en PDF.</p> },
     info: { title: 'Qui suis-je', content: <p>Informations sur moi.</p> },
-    contact: { title: 'Me contacter', content: <p>Mes informations de contact.</p> },
+    contact: { title: 'Me contacter', content: <ContactForm /> },
     sociaux: { title: 'Mes réseaux sociaux', content: <p>Liens vers mes réseaux sociaux.</p> },
+    realisations: { title: 'Mes réalisations', content: <p>Liens vers mes dernieres réalisations.</p> },
   };
 
   const openPopup = (iconId) => {

@@ -23,13 +23,15 @@ const Taskbar = ({ icons, onIconClick, onSearch }) => {
 
   return (
     <div className="taskbar">
-      <WeatherWidget />
-      <input 
-        type="text" 
-        className="taskbar-search" 
-        placeholder="Search..." 
-        onChange={(e) => onSearch(e.target.value)} 
-      />
+      <div className="taskbar-left">
+        <WeatherWidget />
+        <input 
+          type="text" 
+          className="taskbar-search" 
+          placeholder="Search..." 
+          onChange={(e) => onSearch(e.target.value)} 
+        />
+      </div>
       <div className="taskbar-icons">
         {icons.map(icon => (
           <div 

@@ -13,6 +13,11 @@
   backdrop-filter: blur(10px);
 }
 
+.taskbar-left {
+  display: flex;
+  align-items: center;
+}
+
 .weather-widget {
   display: flex;
   flex-direction: column;
@@ -23,10 +28,21 @@
 
 .taskbar-search {
   margin-left: 10px;
-  padding: 5px;
+  padding: 5px 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 20px;
   font-size: 14px;
+  width: 200px;
+  transition: width 0.3s ease;
+  background-color: #f1f1f1;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.taskbar-search:focus {
+  width: 300px;
+  outline: none;
+  border-color: #0078d7;
+  background-color: #fff;
 }
 
 .taskbar-icons {
@@ -121,6 +137,7 @@
     font-size: 10px;
   }
 }
+
 .weather-widget {
   display: flex;
   align-items: center;

@@ -1,0 +1,62 @@
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1; /* Background color */
+    border-radius: 25px; /* Rounded borders */
+    padding: 10px 20px; /* Padding inside the search bar */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for a professional look */
+    transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+    margin-bottom: 20px; /* Space below the search bar */
+  }
+  
+  .search-bar:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
+  }
+  
+  .search-icon {
+    font-size: 16px; /* Size of the magnifying glass icon */
+    color: #888; /* Color of the icon */
+    margin-right: 10px; /* Space between the icon and the input */
+  }
+  
+  .search-input {
+    border: none; /* Remove default border */
+    outline: none; /* Remove default outline */
+    background: none; /* Remove default background */
+    font-size: 16px; /* Font size */
+    color: #333; /* Text color */
+    width: 100%; /* Take up remaining space */
+  }
+  
+  .search-input::placeholder {
+    color: #aaa; /* Placeholder text color */
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .search-bar {
+      padding: 8px 16px;
+    }
+  
+    .search-icon {
+      font-size: 14px;
+    }
+  
+    .search-input {
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .search-bar {
+      padding: 6px 12px;
+    }
+  
+    .search-icon {
+      font-size: 12px;
+    }
+  
+    .search-input {
+      font-size: 12px;
+    }
+  }

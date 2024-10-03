@@ -81,3 +81,41 @@
       width: 90%;
     }
   }
+  .draggable-handle {
+    background-color: #0078d7;
+    color: white;
+    padding: 10px;
+    cursor: move;
+    border-radius: 5px 5px 0 0;
+  }
+  .popup-window {
+    position: absolute;
+    width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .draggable-handle {
+    background-color: #0078d7;
+    color: white;
+    padding: 10px;
+    cursor: move;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .popup-content {
+    padding: 20px;
+  }
