@@ -1,5 +1,4 @@
 /* App.css */
-<<<<<<< HEAD
 html, body {
   margin: 0;
   padding: 0;
@@ -14,13 +13,10 @@ body {
   background-repeat: no-repeat; /* Empêche la répétition de l'image */
 }
 
-=======
->>>>>>> c5c1926 (Fix deployment setup)
 .app {
   display: flex;
   flex-direction: column;
   height: 100vh; /* Prendre toute la hauteur de la fenêtre */
-<<<<<<< HEAD
 }
 
 .desktop {
@@ -100,18 +96,3 @@ body {
     width: calc(25% - 20px); /* Quatre icônes par ligne sur ordinateur */
   }
 }
-=======
-  background-image: url('./assets/images/background.png'); /* Chemin vers ton image */
-  background-size: cover; /* Ajuster l'image pour couvrir tout l'écran */
-  background-position: center; /* Centrer l'image */
-  background-repeat: no-repeat; /* Ne pas répéter l'image */
-}
-
-
-.desktop {
-  flex: 1; /* Prendre tout l'espace disponible */
-  display: flex;
-  justify-content: center; /* Centrer le contenu horizontalement */
-  align-items: center; /* Centrer le contenu verticalement */
-}
->>>>>>> c5c1926 (Fix deployment setup)
