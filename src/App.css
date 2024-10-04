@@ -98,3 +98,34 @@ body {
     width: 48px; /* Icon width */
   }
 }
+.popup-window {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 1000;
+  width: 80%; /* Ajustez la largeur de la popup */
+  max-width: 800px; /* Limite maximale de la largeur */
+  height: auto;
+  max-height: 80%; /* Limite maximale de la hauteur */
+  overflow-y: auto; /* Ajoutez un défilement vertical si nécessaire */
+}
+
+.popup-window-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.popup-window-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.popup-window-close {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+}

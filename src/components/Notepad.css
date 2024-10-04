@@ -1,0 +1,49 @@
+.notepad {
+    display: flex;
+    align-items: flex-start;
+}
+  
+.notepad-content {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre-wrap;
+    width: 70%;
+}
+  
+.notepad-line {
+    display: flex;
+    opacity: 0; /* Commence par être invisible */
+    animation: fadeIn 0.5s forwards; /* Animation pour l'apparition */
+}
+
+.line-number {
+    width: 30px;
+    text-align: right;
+    margin-right: 10px;
+    color: #888;
+}
+  
+.line-text {
+    flex: 1;
+}
+  
+.notepad-image {
+    margin-left: 20px;
+}
+  
+.notepad-image img {
+    max-width: 200px;
+    border-radius: 10px;
+}
+
+/* Animation pour l'apparition des lignes de texte */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
