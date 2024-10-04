@@ -26,6 +26,8 @@ const App = () => {
     { id: 'sociaux', label: 'Mes réseaux sociaux', image: sociauxIcon },
     { id: 'realisations', label: 'Mes réalisations', image: realisationIcon },
   ]);
+  const [countdown, setCountdown] = useState(2); // État pour le compteur
+  const [intervalId, setIntervalId] = useState(null); // État pour l'ID de l'intervalle
 
   const contentMap = {
     github: { title: 'Mon GitHub', content: <p>Voici le lien vers mon GitHub.</p> },
@@ -41,10 +43,45 @@ const App = () => {
     contact: { title: 'Me contacter', content: <ContactForm /> },
     sociaux: { title: 'Mes réseaux sociaux', content: <p>Liens vers mes réseaux sociaux.</p> },
     realisations: { title: 'Mes réalisations', content: <p>Liens vers mes dernières réalisations.</p> },
-};
-
+  };
 
   const openPopup = (iconId) => {
+    if (iconId === 'github' || iconId === 'CV') {
+      // Réinitialiser le compteur et nettoyer l'intervalle en cours
+      setCountdown(2);
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+
+      const isGithub = iconId === 'github';
+      const redirectUrl = isGithub ? 'https://github.com/Haitaroo/' : '/portfolio/fichiers/CV_Olivier_BARBIN.pdf';
+      const title = isGithub ? 'Redirection' : 'Acheminement vers  le CV';
+      const message = isGithub ? 'Direction vers le Github dans 2 secondes...' : 'Direction  vers le  CV dans 2 secondes...';
+
+      setPopup({
+        isOpen: true,
+        title,
+        content: <p>{message}</p>,
+        position: { top: window.innerHeight / 2 - 100, left: window.innerWidth / 2 - 200 }
+      });
+
+      const newIntervalId = setInterval(() => {
+        setCountdown(prevCountdown => {
+          if (prevCountdown === 1) {
+            clearInterval(newIntervalId);
+            window.open(redirectUrl, '_blank');
+            setPopup({ isOpen: false, title: '', content: null, position: { top: 100, left: 100 } });
+            setCountdown(2); // Réinitialiser le compteur à 2 secondes
+          }
+          return prevCountdown - 1;
+        });
+      }, 1000);
+
+      setIntervalId(newIntervalId);
+
+      return;
+    }
+
     const { title, content } = contentMap[iconId];
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
@@ -53,6 +90,11 @@ const App = () => {
 
   const closePopup = () => {
     setPopup(prevState => ({ ...prevState, isOpen: false }));
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+    setCountdown(2); // Réinitialiser le compteur à 2 secondes
   };
 
   const handleSearch = (query) => {

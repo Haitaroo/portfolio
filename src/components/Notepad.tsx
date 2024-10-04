@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Notepad.css';
+import OrbitingCircles from './OrbitingCircles'; // Importer le composant OrbitingCircles
 
 interface NotepadProps {
     image: string; // Définir le type pour l'image en tant que chaîne
@@ -50,6 +51,7 @@ const Notepad: React.FC<NotepadProps> = ({ image }) => {
                         <span className="line-text">{line}</span>
                     </div>
                 ))}
+                <OrbitingCircles /> {/* Ajouter le composant OrbitingCircles après le texte */}
             </div>
             <div className="notepad-image">
                 <img src={image} alt="Olivier" />

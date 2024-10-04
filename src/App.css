@@ -22,20 +22,21 @@ body {
 .desktop {
   flex: 1; /* Take all available space */
   display: grid;
-  grid-template-columns: repeat(auto-fill, 48px); /* Columns of 48px */
-  grid-auto-rows: 48px; /* Rows of 48px */
-  gap: 43px 48px; /* Vertical and horizontal spacing */
+  grid-template-columns: repeat(auto-fill, 80px); /* Increase column width */
+  grid-auto-rows: 100px; /* Increase row height */
+  gap: 20px; /* Increase gap between icons */
   justify-content: flex-start; /* Align icons to the left */
   align-items: flex-start; /* Align icons to the top */
   padding: 10px; /* Add some padding around the desktop */
 }
 
 .desktop-icon {
+  margin: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: transform 0.2s, background-color 0.2s; /* Smooth transition for hover effects */
-  width: 48px; /* Icon width */
+  width: 60px; /* Increase icon width */
   text-align: center;
   margin: 0; /* No extra margin around icons */
 }
@@ -54,6 +55,7 @@ body {
 .desktop-icon-label {
   font-family: 'Segoe UI', sans-serif;
   margin-top: 5px; /* Space between the icon and the text */
+  margin-bottom: 10px; /* Space between each text of icon */
   font-size: 12px; /* Text size */
   color: #ffffff; /* Text color */
   text-align: center; /* Center the text */
@@ -63,6 +65,38 @@ body {
 
 .desktop-icon:hover .desktop-icon-label {
   opacity: 1; /* Make the text fully visible on hover */
+}
+
+.popup-window {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 1000;
+  width: 80%; /* Ajustez la largeur de la popup */
+  max-width: 800px; /* Limite maximale de la largeur */
+  height: auto;
+  max-height: 80%; /* Limite maximale de la hauteur */
+  overflow-y: auto; /* Ajoutez un défilement vertical si nécessaire */
+}
+
+.popup-window-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.popup-window-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.popup-window-close {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 /* Responsive styles */
@@ -97,35 +131,4 @@ body {
   .desktop-icon {
     width: 48px; /* Icon width */
   }
-}
-.popup-window {
-  position: absolute;
-  background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  z-index: 1000;
-  width: 80%; /* Ajustez la largeur de la popup */
-  max-width: 800px; /* Limite maximale de la largeur */
-  height: auto;
-  max-height: 80%; /* Limite maximale de la hauteur */
-  overflow-y: auto; /* Ajoutez un défilement vertical si nécessaire */
-}
-
-.popup-window-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.popup-window-title {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.popup-window-close {
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: bold;
 }
