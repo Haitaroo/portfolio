@@ -1,46 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import './Notepad.css';
-import OrbitingCircles from './OrbitingCircles'; // Importer le composant OrbitingCircles
+import OrbitingCircles from './OrbitingCircles'; // Composant OrbitingCircles
 
 interface NotepadProps {
-    image: string; // Définir le type pour l'image en tant que chaîne
+    image: string;
 }
 
 const Notepad: React.FC<NotepadProps> = ({ image }) => {
     const [displayedText, setDisplayedText] = useState<string[]>([]);
+    const [showFullText, setShowFullText] = useState(false); // État pour gérer l'affichage complet du texte
+
     const fullText: string = `
         Salut ! Je m'appelle Olivier et je suis passionné par la création de projets web.
         Mon parcours a débuté en explorant le développement front-end avec HTML, CSS,
         et des technologies comme JavaScript, Python, Bootstrap, et GSAP.
-        Aujourd'hui, je me concentre sur la création d'applications web complètes.
-        Voici les langages de programmation utilisés pour mes projets les plus récents.
-    `;
+        Aujourd'hui, je me concentre sur la création d'applications web complètes`;
+
+    const firstSentence: string = fullText.split('\n')[1].trim(); // Première phrase du texte
 
     useEffect(() => {
-        const lines: string[] = fullText.split('\n').map(line => line.trim()).filter(line => line.length > 0);
-        let isMounted = true; // Flag to check if the component is mounted
+        let isMounted = true;
 
-        // Ajoutez un délai avant de commencer à afficher les lignes
-        const delayBeforeDisplay = async (delay: number) => {
-            await new Promise<void>(resolve => setTimeout(resolve, delay));
-        };
-
-        const displayLines = async () => {
-            await delayBeforeDisplay(200); // Délai de 1 seconde avant d'afficher les lignes
-
-            for (let i = 0; i < lines.length; i++) {
-                if (!isMounted) return; // Exit if the component is unmounted
-                await new Promise<void>(resolve => setTimeout(resolve, 1000)); // Délai de 1 seconde entre chaque ligne
-                setDisplayedText(prev => [...prev, lines[i]]); // Ajoute chaque ligne
+        const displayInitialText = async () => {
+            if (isMounted) {
+                setDisplayedText([firstSentence]); // Affiche seulement la première phrase
             }
         };
 
-        displayLines();
+        displayInitialText();
 
         return () => {
-            isMounted = false; // Cleanup function to set the flag to false
+            isMounted = false;
         };
-    }, []); // Utiliser un tableau vide pour s'assurer que l'effet ne s'exécute qu'une seule fois
+    }, [firstSentence]);
+
+    const handleShowMore = () => {
+        const remainingText = fullText
+            .split('\n')
+            .slice(2)
+            .map(line => line.trim())
+            .filter(line => line.length > 0); // Supprime les lignes vides
+        setDisplayedText(prev => [...prev, ...remainingText]); // Ajoute les lignes restantes
+        setShowFullText(true); // Cache le bouton après avoir affiché tout le texte
+    };
 
     return (
         <div className="notepad">
@@ -51,7 +53,13 @@ const Notepad: React.FC<NotepadProps> = ({ image }) => {
                         <span className="line-text">{line}</span>
                     </div>
                 ))}
-                <OrbitingCircles /> {/* Ajouter le composant OrbitingCircles après le texte */}
+
+                {/* Bouton "Voir plus" qui s'affiche seulement si tout le texte n'est pas encore affiché */}
+                {!showFullText && (
+                    <button className="see-more-button" onClick={handleShowMore}>
+                        Voir plus
+                    </button>
+                )}
             </div>
             <div className="notepad-image">
                 <img src={image} alt="Olivier" />

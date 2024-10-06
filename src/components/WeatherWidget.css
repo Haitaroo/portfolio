@@ -23,12 +23,12 @@
 }
 
 .weather-temp {
-  font-size: 24px;
+  /* font-size: 24px; */
   font-weight: bold;
 }
 
 .weather-description {
-  font-size: 16px;
+  /* font-size: 16px; */
   color: #555;
 }
 

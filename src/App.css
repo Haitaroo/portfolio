@@ -21,7 +21,6 @@ body {
 
 .desktop {
   flex: 1; /* Take all available space */
-  display: grid;
   grid-template-columns: repeat(auto-fill, 80px); /* Increase column width */
   grid-auto-rows: 100px; /* Increase row height */
   gap: 20px; /* Increase gap between icons */
@@ -69,16 +68,33 @@ body {
 
 .popup-window {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centre l'élément horizontalement et verticalement */
   background-color: white;
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
   z-index: 1000;
-  width: 80%; /* Ajustez la largeur de la popup */
-  max-width: 800px; /* Limite maximale de la largeur */
+  width: 80%; /* Prend 80% de la largeur de l'écran en mode desktop/tablet */
+  max-width: 600px; /* Largeur maximale en mode desktop/tablet */
   height: auto;
-  max-height: 80%; /* Limite maximale de la hauteur */
-  overflow-y: auto; /* Ajoutez un défilement vertical si nécessaire */
+  max-height: 80%; /* Limite la hauteur à 80% de l'écran pour éviter le débordement */
+  overflow-y: auto; /* Ajoute un scroll si le contenu dépasse la hauteur */
+  /* padding: 20px; Ajoute un peu de padding pour que le contenu soit espacé des bords */
+}
+
+/* Media query pour téléphone (mobile) */
+@media (max-width: 768px) {
+  .popup-window {
+      width: 100vw; /* Prend toute la largeur de l'écran */
+      height: 100vh; /* Prend toute la hauteur de l'écran */
+      top: 0;
+      left: 0;
+      transform: none; /* Retire la translation car l'élément prend tout l'espace */
+      max-height: none; /* Retire la limite de hauteur */
+      border-radius: 0; /* Pas de bord arrondi pour mieux s'intégrer en plein écran */
+      /* padding: 15px; Padding adapté pour mobile */
+  }
 }
 
 .popup-window-header {
@@ -131,4 +147,179 @@ body {
   .desktop-icon {
     width: 48px; /* Icon width */
   }
+}
+
+.blink {
+  animation: blink-animation 1s infinite;
+}
+
+@keyframes blink-animation {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@media (min-width: 769px) {
+  .desktop {
+    justify-content: flex-start; /* Align icons to the left on desktop */
+    align-items: flex-start; /* Align icons to the top on desktop */
+  }
+
+  .desktop-icon {
+    width: 48px; /* Icon width */
+  }
+}
+
+.blink {
+  animation: blink-animation 1s infinite;
+}
+
+@keyframes blink-animation {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.desktop-icon {
+  /* Styles pour les icônes de bureau */
+}
+
+.taskbar {
+  /* Styles pour la barre des tâches */
+}
+
+.search-bar {
+  /* Styles pour la barre de recherche */
+}
+
+/* Styles pour React Joyride */
+.joyride-tooltip {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 300px;
+  z-index: 10000;
+}
+
+.joyride-tooltip__title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.joyride-tooltip__content {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.joyride-tooltip__footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.joyride-tooltip__button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.joyride-tooltip__button:hover {
+  background-color: #0056b3;
+}
+
+.joyride-tooltip__skip {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.joyride-tooltip__skip:hover {
+  text-decoration: underline;
+}
+.welcome-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  z-index: 10000;
+}
+
+.welcome-popup h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.welcome-popup button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.welcome-popup button:hover {
+  background-color: #0056b3;
+}
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #f1f1f1;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin-left: auto;
+}
+
+.search-bar input {
+  border: none;
+  background: none;
+  padding: 5px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.search-bar input:focus {
+  outline: none;
+}
+
+.search-bar button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 10px;
+}
+
+.search-bar button:hover {
+  background-color: #0056b3;
+}
+.start-tour-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.start-tour-button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 14px;
 }

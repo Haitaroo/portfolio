@@ -7,7 +7,7 @@ const WeatherWidget = () => {
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Saguenay,ca&units=metric&appid=${apiKey}`;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Saguenay,ca&units=metric&lang=fr&appid=${apiKey}`;
 
     fetch(apiUrl)
       .then(response => {
@@ -33,6 +33,7 @@ const WeatherWidget = () => {
   }, []);
 
   const translateDescription = (description) => {
+    console.log('Description reçue:', description); // Ajoutez ce log pour vérifier la description reçue
     const translations = {
       'clear sky': 'ciel dégagé',
       'few clouds': 'quelques nuages',

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import Joyride from 'react-joyride';
 import Taskbar from './components/Taskbar';
 import DesktopIcon from './components/DesktopIcon';
 import PopupWindow from './components/PopupWindow';
 import ContactForm from './components/ContactForm.jsx';
 import Notepad from './components/Notepad';
+import SearchWindow from './components/SearchWindow';
+import WindowsWelcome from './components/WindowsWelcome';
+
 import './App.css';
 import githubIcon from './assets/img/github.png';
 import cvIcon from './assets/img/cv.png';
@@ -13,7 +17,7 @@ import infoIcon from './assets/img/Info.png';
 import contactIcon from './assets/img/contact.png';
 import sociauxIcon from './assets/img/sociaux.png';
 import realisationIcon from './assets/img/realisations.png';
-import olivierPhoto from './assets/img/olivier.png'; // Ajoutez votre photo ici
+import olivierPhoto from './assets/img/olivier.png';
 
 const App = () => {
   const [popup, setPopup] = useState({ isOpen: false, title: '', content: null, position: { top: 100, left: 100 } });
@@ -26,12 +30,28 @@ const App = () => {
     { id: 'sociaux', label: 'Mes réseaux sociaux', image: sociauxIcon },
     { id: 'realisations', label: 'Mes réalisations', image: realisationIcon },
   ]);
-  const [countdown, setCountdown] = useState(2); // État pour le compteur
-  const [intervalId, setIntervalId] = useState(null); // État pour l'ID de l'intervalle
+  const [countdown, setCountdown] = useState(2);
+  const [intervalId, setIntervalId] = useState(null);
+  const [blinkOrder, setBlinkOrder] = useState(['github', 'CV', 'info', 'contact', 'sociaux', 'realisations']);
+  const [blinkTime, setBlinkTime] = useState(1000);
+  const [currentBlinkIndex, setCurrentBlinkIndex] = useState(0);
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [runTour, setRunTour] = useState(false);
+  const [stepIndex, setStepIndex] = useState(0);
 
   const contentMap = {
     github: { title: 'Mon GitHub', content: <p>Voici le lien vers mon GitHub.</p> },
-    CV: { title: 'Mon CV', content: <p>Voici mon CV en PDF.</p> },
+    CV: { 
+      title: 'Mon CV', 
+      content: (
+        <embed
+          src="/portfolio/fichiers/CV_Olivier_BARBIN.pdf"
+          type="application/pdf"
+          width="100%"
+          height="400px"
+        />
+      ) 
+    },
     info: { 
       title: 'Qui suis-je', 
       content: (
@@ -44,44 +64,70 @@ const App = () => {
     sociaux: { title: 'Mes réseaux sociaux', content: <p>Liens vers mes réseaux sociaux.</p> },
     realisations: { title: 'Mes réalisations', content: <p>Liens vers mes dernières réalisations.</p> },
   };
+  
+  const steps = [
+    {
+      target: '.desktop-icon',
+      content: 'Voici vos icônes de bureau. Cliquez sur une icône pour ouvrir une application.',
+    },
+    {
+      target: '.taskbar',
+      content: 'Voici votre barre des tâches. Utilisez-la pour accéder rapidement aux applications.',
+    },
+    {
+      target: '.taskbar-search',
+      content: 'Utilisez la barre de recherche pour trouver rapidement des applications.',
+    },
+  ];
 
   const openPopup = (iconId) => {
-    if (iconId === 'github' || iconId === 'CV') {
-      // Réinitialiser le compteur et nettoyer l'intervalle en cours
+    if (iconId === 'github') {
       setCountdown(2);
       if (intervalId) {
         clearInterval(intervalId);
       }
-
-      const isGithub = iconId === 'github';
-      const redirectUrl = isGithub ? 'https://github.com/Haitaroo/' : '/portfolio/fichiers/CV_Olivier_BARBIN.pdf';
-      const title = isGithub ? 'Redirection' : 'Acheminement vers  le CV';
-      const message = isGithub ? 'Direction vers le Github dans 2 secondes...' : 'Direction  vers le  CV dans 2 secondes...';
-
+  
       setPopup({
         isOpen: true,
-        title,
-        content: <p>{message}</p>,
+        title: 'Redirection vers GitHub',
+        content: <p>Direction vers mon GitHub dans 2 secondes...</p>,
         position: { top: window.innerHeight / 2 - 100, left: window.innerWidth / 2 - 200 }
       });
-
+  
       const newIntervalId = setInterval(() => {
         setCountdown(prevCountdown => {
           if (prevCountdown === 1) {
             clearInterval(newIntervalId);
-            window.open(redirectUrl, '_blank');
-            setPopup({ isOpen: false, title: '', content: null, position: { top: 100, left: 100 } });
-            setCountdown(2); // Réinitialiser le compteur à 2 secondes
+            window.open('https://github.com/Haitaroo/', '_blank');
+            setPopup({ isOpen: false, title: '', content: null, position: { top: 0, left: 100 } });
+            setCountdown(2);
           }
           return prevCountdown - 1;
         });
       }, 1000);
-
+  
       setIntervalId(newIntervalId);
-
       return;
     }
-
+  
+    if (iconId === 'CV') {
+      setPopup({
+        isOpen: true,
+        title: 'Mon CV',
+        content: (
+          <iframe
+            src="/portfolio/fichiers/CV_Olivier_BARBIN.pdf"
+            width="100%"
+            height="1000px"
+            style={{ border: 'none' }}
+            title="CV"
+          />
+        ),
+        position: { top: window.innerHeight / 2 - 250, left: window.innerWidth / 2 - 200 }
+      });
+      return;
+    }
+  
     const { title, content } = contentMap[iconId];
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
@@ -94,7 +140,7 @@ const App = () => {
       clearInterval(intervalId);
       setIntervalId(null);
     }
-    setCountdown(2); // Réinitialiser le compteur à 2 secondes
+    setCountdown(2);
   };
 
   const handleSearch = (query) => {
@@ -114,27 +160,101 @@ const App = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="app">
-        <div className="desktop">
-          {filteredIcons.map((icon, index) => (
-            <DesktopIcon 
-              key={icon.id} 
-              id={icon.id} 
-              label={icon.label} 
-              image={icon.image} 
-              index={index}
-              moveIcon={moveIcon}
-              onClick={(e) => openPopup(icon.id)} // Ouvre la fenêtre en cliquant sur l'icône
+        {showWelcome ? (
+          <WindowsWelcome onClose={() => setShowWelcome(false)} />
+        ) : (
+          <>
+            <Joyride
+              steps={steps}
+              continuous={true}
+              showSkipButton={true}
+              run={runTour}
+              stepIndex={stepIndex}
+              callback={(data) => {
+                const { action, index, type } = data;
+                if (type === 'step:after' || type === 'target:notFound') {
+                  setStepIndex(index + (action === 'next' ? 1 : -1));
+                } else if (type === 'tour:end') {
+                  setRunTour(false);
+                  setStepIndex(0);
+                }
+              }}
+              styles={{
+                options: {
+                  zIndex: 10000,
+                  backgroundColor: '#fff',
+                  borderRadius: '8px',
+                  boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+                  padding: '20px',
+                  maxWidth: '300px',
+                },
+                buttonNext: {
+                  backgroundColor: '#007bff',
+                  border: 'none',
+                  borderRadius: '4px',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  padding: '8px 12px',
+                  fontSize: '14px',
+                },
+                buttonBack: {
+                  marginRight: '10px',
+                  color: '#007bff',
+                },
+                buttonSkip: {
+                  background: 'none',
+                  border: 'none',
+                  color: '#007bff',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                },
+                tooltip: {
+                  textAlign: 'left',
+                },
+                tooltipTitle: {
+                  fontSize: '18px',
+                  marginBottom: '10px',
+                },
+                tooltipContent: {
+                  fontSize: '14px',
+                  lineHeight: '1.5',
+                },
+                tooltipFooter: {
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  marginTop: '20px',
+                },
+              }}
             />
-          ))}
-        </div>
-        <Taskbar icons={filteredIcons} onIconClick={openPopup} onSearch={handleSearch} />
-        {popup.isOpen && (
-          <PopupWindow 
-            title={popup.title} 
-            content={popup.content} 
-            onClose={closePopup} 
-            initialPosition={popup.position} // Position au centre de l'écran
-          />
+            <div className="start-tour-container">
+              <button onClick={() => setRunTour(true)} className="start-tour-button">
+                Démarrer la visite
+              </button>
+            </div>
+            <div className="desktop">
+              {filteredIcons.map((icon, index) => (
+                <DesktopIcon 
+                  key={icon.id} 
+                  id={icon.id} 
+                  label={icon.label} 
+                  image={icon.image} 
+                  index={index}
+                  moveIcon={moveIcon}
+                  onClick={(e) => openPopup(icon.id)} 
+                />
+              ))}
+            </div>
+            {searchQuery && <SearchWindow query={searchQuery} onClose={() => setSearchQuery('')} />}
+            <Taskbar icons={filteredIcons} onIconClick={openPopup} onSearch={handleSearch} />
+            {popup.isOpen && (
+              <PopupWindow 
+                title={popup.title} 
+                content={popup.content} 
+                onClose={closePopup} 
+                initialPosition={popup.position}
+              />
+            )}
+          </>
         )}
       </div>
     </DndProvider>

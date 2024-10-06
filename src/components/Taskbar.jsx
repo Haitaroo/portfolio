@@ -1,51 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import WeatherWidget from './WeatherWidget';
+import React, { useState } from 'react';
+import WeatherWidget from './WeatherWidget'; // Assurez-vous d'importer votre composant WeatherWidget
+import SearchBar from './SearchBar'; // Importez votre composant SearchBar
+import wifiIcon from '../assets/img/wifi.png'; // Chemin d'importation pour votre icône Wi-Fi
+import soundIcon from '../assets/img/son.png'; // Chemin d'importation pour votre icône son
 import './Taskbar.css';
-import wifiIcon from '../assets/img/wifi.png';
-import soundIcon from '../assets/img/son.png';
 
 const Taskbar = ({ icons, onIconClick, onSearch }) => {
   const [hoveredIcon, setHoveredIcon] = useState(null);
-  const [time, setTime] = useState(new Date());
-
-  useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const formatTime = (date) => {
-    return date.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    });
-  };
-
-  const [isWifiMenuOpen, setWifiMenuOpen] = useState(false);
-  const [isSoundMenuOpen, setSoundMenuOpen] = useState(false);
-  const [volume, setVolume] = useState(50);
-  const [isConnected, setIsConnected] = useState(true);
+  const [isWifiMenuOpen, setIsWifiMenuOpen] = useState(false);
+  const [isSoundMenuOpen, setIsSoundMenuOpen] = useState(false);
+  const [volume, setVolume] = useState(50); // Valeur initiale pour le volume
+  const [time] = useState(new Date()); // Remplacez par votre logique de gestion du temps
 
   const toggleWifiMenu = () => {
-    setWifiMenuOpen(!isWifiMenuOpen);
+    setIsWifiMenuOpen(prev => !prev);
   };
 
   const toggleSoundMenu = () => {
-    setSoundMenuOpen(!isSoundMenuOpen);
+    setIsSoundMenuOpen(prev => !prev);
   };
 
   const handleVolumeChange = (e) => {
     setVolume(e.target.value);
   };
 
+  const formatTime = (time) => {
+    return time.toLocaleTimeString(); // Formatez le temps selon vos besoins
+  };
+
   return (
     <div className="taskbar">
       <div className="taskbar-left">
         <WeatherWidget />
-        <input 
-          type="text" 
-          className="taskbar-search" 
-          placeholder="Search..." 
+        {/* Remplacez l'input par le composant SearchBar */}
+        <SearchBar 
+          placeholder="Recherche..." 
           onChange={(e) => onSearch(e.target.value)} 
         />
       </div>

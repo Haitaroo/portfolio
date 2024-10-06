@@ -1,41 +1,63 @@
+/* Container principal de la notepad */
 .notepad {
     display: flex;
+    flex-wrap: wrap; /* Permet au contenu de s'ajuster sur des petits écrans */
     align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #e0e0e0; /* Couleur de fond subtile pour rappeler Windows 11 */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Légère ombre pour un effet moderne */
 }
-  
+
+/* Contenu du notepad */
 .notepad-content {
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    padding: 10px;
+    background-color: #ffffff; /* Fond blanc classique pour un effet minimaliste */
+    border: 1px solid #d0d0d0;
+    padding: 20px;
     font-family: 'Courier New', Courier, monospace;
     white-space: pre-wrap;
-    width: 70%;
+    width: 100%;
+    max-width: 700px; /* Largeur maximale pour les grands écrans */
+    border-radius: 8px; /* Légère courbure */
+    overflow: hidden; /* Cache tout débordement */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Douce ombre pour effet flottant */
 }
-  
+
+/* Lignes de texte */
 .notepad-line {
     display: flex;
+    align-items: center;
     opacity: 0; /* Commence par être invisible */
     animation: fadeIn 0.5s forwards; /* Animation pour l'apparition */
 }
 
+/* Numérotation des lignes */
 .line-number {
-    width: 30px;
+    width: 40px; /* Augmentation pour une meilleure lisibilité */
     text-align: right;
     margin-right: 10px;
-    color: #888;
+    color: #4a4a4a; /* Gris foncé pour contraste */
 }
-  
+
+/* Texte des lignes */
 .line-text {
     flex: 1;
+    color: #333; /* Contraste amélioré */
 }
-  
+
+/* Image accompagnant la notepad */
 .notepad-image {
+    max-width: 200px;
+    flex-shrink: 0; /* Empêche l'image de se rétrécir */
     margin-left: 20px;
 }
-  
+
 .notepad-image img {
-    max-width: 200px;
+    width: 100%;
     border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Ajout d'une ombre pour améliorer l'apparence */
 }
 
 /* Animation pour l'apparition des lignes de texte */
@@ -47,3 +69,53 @@
         opacity: 1;
     }
 }
+
+/* Styles responsives */
+@media (max-width: 768px) {
+    .notepad-content {
+        width: 90%; /* Occupe 90% de la largeur sur les écrans moyens */
+    }
+
+    .notepad-image {
+        max-width: 150px; /* Réduction de la taille de l'image */
+    }
+}
+
+@media (max-width: 480px) {
+    .notepad-content {
+        width: 100%; /* Pleine largeur sur petits écrans */
+        text-align: center; /* Centre le texte */
+    }
+
+    .notepad-image {
+        width: 100%; /* Utilise toute la largeur pour l'image */
+        max-width: none; /* Supprime la limite de largeur */
+        margin: 20px 0; /* Espace au-dessus et en-dessous de l'image */
+        display: flex; /* Centre l'image */
+        justify-content: center;
+    }
+
+    .notepad-image img {
+        width: 90%; /* Taille de l'image adaptée à l'écran */
+        max-width: 300px; /* Limite la taille maximale pour garder l'image compacte */
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile */
+    }
+}
+/* Bouton "Voir plus" */
+.see-more-button {
+    background-color: #0078d7; /* Couleur bleu Windows */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.see-more-button:hover {
+    background-color: #0056b3; /* Couleur plus foncée au survol */
+}
+

@@ -121,7 +121,8 @@
 
   .taskbar-search,
   .taskbar-time,
-  .taskbar-right {
+  .taskbar-right,
+  .weather-widget { /* Masquer la barre de recherche, le temps et le widget météo */
     display: none;
   }
 
@@ -133,38 +134,5 @@
   .taskbar-icon img {
     width: 35px; /* Tailles des icônes ajustées pour mobile */
     height: 35px;
-  }
-}
-
-.weather-widget {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: #333;
-}
-
-.weather-icon {
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-  .weather-widget {
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .weather-widget {
-    display: none !important;
-    font-size: 10px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .weather-widget.weather-error {
-    display: none;
   }
 }

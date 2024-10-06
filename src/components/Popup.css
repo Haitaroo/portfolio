@@ -1,144 +1,40 @@
 .popup {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    z-index: 1000;
-    opacity: 0;
-    animation: fadeIn 0.5s forwards;
-    max-width: 300px; 
-  }
-  
-  .popup.success {
-    border-color: #4caf50;
-  }
-  
-  .popup.error {
-    border-color: #f44336;
-    animation: shake 0.5s;
-  }
-  
-  .popup.fade-out {
-    animation: fadeOut 0.5s forwards;
-  }
-  
-
-  
-  .popup-icon {
-    font-size: 24px;
-    margin-right: 10px;
-  }
-  
-  .popup-content p {
-    flex-grow: 1;
-    margin: 0;
-  }
-  
-  .popup-close-button {
-    background: none;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    margin-left: auto;
-  }
-  
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes fadeOut {
-    to {
-      opacity: 0;
-    }
-  }
-  
-  @keyframes shake {
-    0%, 100% {
-      transform: translateX(0);
-    }
-    20%, 60% {
-      transform: translateX(-10px);
-    }
-    40%, 80% {
-      transform: translateX(10px);
-    }
-  }
-  @media (max-width: 768px) {
-    .popup {
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      border-radius: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  
-    .popup-content {
-      width: 90%;
-      max-width: 400px; /* Pour garder un peu de marges sur mobile */
-      background-color: white;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-    }
-  }
-  .popup-close-button {
-    background: none;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    margin-left: auto;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #ffffff; /* Couleur de fond blanche */
+  border-radius: 10px; /* Coins arrondis */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombre plus douce */
+  padding: 20px;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards, slideIn 0.3s forwards; /* Animation d'apparition */
+  max-width: 300px;
+  transition: transform 0.3s ease; /* Transition douce pour l'apparition */
 }
 
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-    }
+.popup.success {
+  border: 2px solid #4caf50; /* Couleur verte pour le succès */
 }
 
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-    }
+.popup.error {
+  border: 2px solid #f44336; /* Couleur rouge pour l'erreur */
+  animation: shake 0.5s; /* Effet de secousse pour les erreurs */
 }
 
-@keyframes shake {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    20%, 60% {
-        transform: translateX(-10px);
-    }
-    40%, 80% {
-        transform: translateX(10px);
-    }
+.popup.fade-out {
+  animation: fadeOut 0.5s forwards;
 }
 
-@media (max-width: 768px) {
-    .popup {
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        max-width: none;
-        max-height: none;
-        padding: 20px;
-        box-sizing: border-box;
-        overflow-y: auto;
-    }
+@keyframes slideIn {
+  from {
+      transform: translateY(-20px); /* Déplacement vers le bas lors de l'apparition */
+  }
+  to {
+      transform: translateY(0); /* Retour à la position d'origine */
+  }
 }
+
 @keyframes fadeIn {
   to {
       opacity: 1;
@@ -163,18 +59,17 @@
   }
 }
 
+/* Responsive styles */
 @media (max-width: 768px) {
   .popup {
       top: 0;
       right: 0;
       bottom: 0;
       left: 0;
-      width: 100vw; /* Full viewport width */
-      height: 100vh; /* Full viewport height */
-      max-width: none;
-      max-height: none;
-      padding: 0; /* Remove padding to use full screen */
-      box-sizing: border-box;
-      overflow: hidden; /* Prevent scrolling */
+      width: 100vw;
+      height: auto;
+      padding: 20px; /* Maintenir du padding sur mobile */
+      border-radius: 0; /* Coins carrés sur mobile */
+      box-shadow: none; /* Pas d'ombre sur mobile */
   }
 }

@@ -1,20 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Popup.css';
 
 const Popup = ({ message, type, onClose }) => {
+  const popupRef = useRef(null);
+
   useEffect(() => {
     if (type === 'success') {
       const timer = setTimeout(() => {
-        document.querySelector('.popup').classList.add('fade-out');
-        setTimeout(onClose, 500); // Wait for fade-out animation to complete
-      }, 2000); // Disappear after 2 seconds
+        if (popupRef.current) {
+          popupRef.current.classList.add('fade-out');
+          setTimeout(onClose, 500); // Attendre la fin de l'animation de disparition
+        }
+      }, 2000); // Disparaître après 2 secondes
 
       return () => clearTimeout(timer);
     }
   }, [type, onClose]);
 
+  // Ferme la popup si l'utilisateur clique à l'extérieur
+  const handleClickOutside = (e) => {
+    if (popupRef.current && !popupRef.current.contains(e.target)) {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className={`popup ${type}`}>
+    <div className={`popup ${type}`} ref={popupRef}>
       <div className="popup-content">
         {type === 'success' && <span className="popup-icon">✔️</span>}
         {type === 'error' && <span className="popup-icon">❌</span>}

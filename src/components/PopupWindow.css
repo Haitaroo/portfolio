@@ -1,18 +1,15 @@
 .popup-window {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
+  top: 0;
+  left: 0;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
   background-color: #f0f0f0;
-  border: 1px solid #a9a9a9;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: none; /* Retire la bordure qui pourrait prendre de la place */
   z-index: 1000;
   display: flex;
   flex-direction: column;
   padding: 0;
-  transition: transform 0.3s;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -23,44 +20,21 @@
   background-color: #0078d7;
   color: white;
   padding: 10px;
-  cursor: move;
   border-bottom: 1px solid #a9a9a9;
 }
 
-.popup-header span {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.popup-header button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 10px;
-  transition: color 0.3s;
-  pointer-events: auto; /* Assure que le bouton reçoit bien les événements de clic */
-}
-
-.popup-header button:hover {
-  color: #ff0000;
-}
-
 .popup-content {
+  flex-grow: 1; /* Assure que le contenu prend tout l’espace restant */
   font-size: 14px;
   color: #333;
-  padding: 20px;
+  overflow: auto; /* Le contenu défile si nécessaire */
   text-align: center;
-  flex-grow: 1;
-  overflow: auto; /* Ensure content is scrollable if it overflows */
 }
 
 .popup-close-button {
   background-color: #0078d7;
   color: white;
   border: none;
-  border-radius: 0 0 5px 5px;
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -74,16 +48,6 @@
 
 /* Responsive styles */
 @media (max-width: 768px) {
-  .popup-window {
-    top: 0;
-    left: 0;
-    transform: none;
-    width: 100vw; /* Full viewport width */
-    height: 100vh; /* Full viewport height */
-    border-radius: 0; /* Remove border radius for full screen */
-    padding: 0; /* Remove padding to use full screen */
-  }
-
   .popup-header {
     padding: 15px;
   }
@@ -95,22 +59,12 @@
 }
 
 @media (max-width: 480px) {
-  .popup-window {
-    top: 0;
-    left: 0;
-    transform: none;
-    width: 100vw; /* Full viewport width */
-    height: 100vh; /* Full viewport height */
-    border-radius: 0; /* Remove border radius for full screen */
-    padding: 0; /* Remove padding to use full screen */
-  }
-
   .popup-header {
     padding: 15px;
   }
 
   .popup-header button {
-    font-size: 24px; /* Increase font size on very small screens */
-    padding: 20px; /* Increase clickable area */
+    font-size: 24px;
+    padding: 20px;
   }
 }
