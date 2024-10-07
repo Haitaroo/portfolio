@@ -40,7 +40,7 @@ const App = () => {
   const [showWelcome, setShowWelcome] = useState(true);
   const [runTour, setRunTour] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
-  const [volume, setVolume] = useState(50); // Ajout de l'état du volume
+  const [volume, setVolume] = useState(50);
   const [isPopupVisible, setIsPopupVisible] = useState(true);
   const [isPopupMaximized, setIsPopupMaximized] = useState(false);
 
@@ -78,7 +78,7 @@ const App = () => {
     contact: { title: 'Me contacter', content: <ContactForm /> },
     sociaux: { title: 'Mes réseaux sociaux', content: <p>Liens vers mes réseaux sociaux.</p> },
     realisations: { title: 'Mes réalisations', content: <p>Liens vers mes dernières réalisations.</p> },
-    spotify: { title: 'Une breve écoute', content: <MusicPlayer volume={volume} /> }, // Passer le volume au MusicPlayer
+    spotify: { title: 'Une breve écoute', content: <MusicPlayer volume={volume} setVolume={setVolume} /> }, // Passer setVolume ici
   };
   
   const steps = [
@@ -100,7 +100,7 @@ const App = () => {
   ];
 
   const openPopup = (iconId) => {
-    setIsPopupVisible(true); // Réinitialise la visibilité de la popup à "visible"
+    setIsPopupVisible(true);
   
     if (iconId === 'github') {
       setCountdown(2);
@@ -180,7 +180,7 @@ const App = () => {
   
   useEffect(() => {
     if (!showWelcome) {
-      setRunTour(true); // Démarrer le tour après la fermeture de l'animation de bienvenue
+      setRunTour(true);
     }
   }, [showWelcome]);
 
@@ -231,10 +231,11 @@ const App = () => {
               ))}
             </div>
             <Taskbar 
+              icons={icons} // Pass icons prop here
               onIconClick={openPopup} 
               onSearch={handleSearch} 
               volume={volume} 
-              setVolume={setVolume} // Passe setVolume pour contrôler le volume
+              setVolume={setVolume}
             />
             {popup.isOpen && (
               <PopupWindow 
@@ -245,7 +246,7 @@ const App = () => {
                 onMinimize={handleMinimize}
                 onMaximize={handleMaximize}
                 isMaximized={isPopupMaximized}
-                isVisible={isPopupVisible} // Vérifie la visibilité ici
+                isVisible={isPopupVisible}
               />
             )}
           </>

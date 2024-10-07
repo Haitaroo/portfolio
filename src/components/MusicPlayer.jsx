@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './MusicPlayer.css';
 
-const MusicPlayer = ({ volume }) => {
+const MusicPlayer = ({ volume, setVolume }) => {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [tracks, setTracks] = useState([]);
@@ -9,10 +9,9 @@ const MusicPlayer = ({ volume }) => {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    // Fetch music data from iTunes API using fetch
     const fetchTracks = async (limit = 10) => {
       try {
-        const response = await fetch(`/api/search?term=pop&limit=${limit}`, {
+        const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://itunes.apple.com/search?term=pop&limit=' + limit)}`, {
           headers: {
             'Accept': 'application/json',
           },
@@ -21,21 +20,25 @@ const MusicPlayer = ({ volume }) => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        const uniqueTracks = [];
-        const trackTitles = new Set();
+        if (data.contents) {
+          const results = JSON.parse(data.contents).results;
+          const uniqueTracks = [];
+          const trackTitles = new Set();
 
-        data.results.forEach(track => {
-          if (!trackTitles.has(track.trackName)) {
-            trackTitles.add(track.trackName);
-            uniqueTracks.push(track);
+          results.forEach(track => {
+            if (!trackTitles.has(track.trackName)) {
+              trackTitles.add(track.trackName);
+              uniqueTracks.push(track);
+            }
+          });
+
+          if (uniqueTracks.length < 10) {
+            fetchTracks(limit + 10);
+          } else {
+            setTracks(uniqueTracks.slice(0, 10));
           }
-        });
-
-        if (uniqueTracks.length < 10) {
-          // Increase the limit and fetch again if we don't have enough unique tracks
-          fetchTracks(limit + 10);
         } else {
-          setTracks(uniqueTracks.slice(0, 10));
+          throw new Error('Invalid response format');
         }
       } catch (err) {
         setError('Failed to fetch tracks. Please try again later.');
@@ -47,9 +50,8 @@ const MusicPlayer = ({ volume }) => {
   }, []);
 
   useEffect(() => {
-    // Met à jour le volume de l'élément audio lorsque le volume change
     if (audioRef.current) {
-      audioRef.current.volume = volume / 100; // Ajuste le volume entre 0 et 1
+      audioRef.current.volume = volume / 100;
     }
   }, [volume]);
 
@@ -66,6 +68,14 @@ const MusicPlayer = ({ volume }) => {
       setIsPlaying(true);
       audioRef.current.src = track.previewUrl;
       audioRef.current.play();
+    }
+  };
+
+  const handleVolumeChange = (e) => {
+    const newVolume = parseInt(e.target.value, 10);
+    setVolume(newVolume);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume / 100;
     }
   };
 
@@ -86,7 +96,6 @@ const MusicPlayer = ({ volume }) => {
               <p className="track-title">{track.trackName}</p>
               <p className="track-artist">{track.artistName}</p>
             </div>
-            {currentTrack && currentTrack.trackId === track.trackId && (isPlaying ? '🎶' : '⏸️')}
           </div>
         ))}
       </div>
@@ -102,6 +111,16 @@ const MusicPlayer = ({ volume }) => {
               <span className="current-track-artist">{currentTrack.artistName}</span>
             </div>
           </div>
+          <div className="volume-control">
+            <input 
+              type="range" 
+              min="0" 
+              max="100" 
+              value={volume} 
+              onChange={handleVolumeChange} 
+            />
+            <span>{volume}%</span>
+          </div>
         </div>
       )}
       <audio
@@ -112,4 +131,4 @@ const MusicPlayer = ({ volume }) => {
   );
 };
 
-export default MusicPlayer;
+export default MusicPlayer; 

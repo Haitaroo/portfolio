@@ -15,14 +15,15 @@ const Taskbar = ({ icons = [], onIconClick, onSearch, volume, setVolume }) => {
   const [time] = useState(new Date());
   const [isConnected, setIsConnected] = useState(false);
   const [selectedNetwork, setSelectedNetwork] = useState(null);
-  const networks = ['Réseau 1', 'Réseau 2', 'Réseau 3']; // Liste de réseaux fictifs
+  const networks = ['Réseau 1', 'Réseau 2', 'Réseau 3'];
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
   const handleVolumeChange = (e) => {
-    setVolume(parseInt(e.target.value, 10));
+    const newVolume = parseInt(e.target.value, 10);
+    setVolume(newVolume);
   };
 
   const formatTime = (time) => {
@@ -32,13 +33,13 @@ const Taskbar = ({ icons = [], onIconClick, onSearch, volume, setVolume }) => {
   const connectToNetwork = (network) => {
     setSelectedNetwork(network);
     setIsConnected(true);
-    toggleMenu(); // Fermer le menu après la connexion
+    toggleMenu();
   };
 
   const disconnectFromNetwork = () => {
     setIsConnected(false);
     setSelectedNetwork(null);
-    toggleMenu(); // Fermer le menu après la déconnexion
+    toggleMenu();
   };
 
   const getVolumeIcon = () => {
