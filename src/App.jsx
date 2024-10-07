@@ -7,8 +7,8 @@ import DesktopIcon from './components/DesktopIcon';
 import PopupWindow from './components/PopupWindow';
 import ContactForm from './components/ContactForm.jsx';
 import Notepad from './components/Notepad';
-import SearchWindow from './components/SearchWindow';
 import WindowsWelcome from './components/WindowsWelcome';
+import MusicPlayer from './components/MusicPlayer';
 
 import './App.css';
 import githubIcon from './assets/img/github.png';
@@ -18,6 +18,7 @@ import contactIcon from './assets/img/contact.png';
 import sociauxIcon from './assets/img/sociaux.png';
 import realisationIcon from './assets/img/realisations.png';
 import olivierPhoto from './assets/img/olivier.png';
+import spotifyIcon from './assets/img/30secplayer.png';
 
 const App = () => {
   const [popup, setPopup] = useState({ isOpen: false, title: '', content: null, position: { top: 100, left: 100 } });
@@ -29,6 +30,7 @@ const App = () => {
     { id: 'contact', label: 'Me contacter', image: contactIcon },
     { id: 'sociaux', label: 'Mes réseaux sociaux', image: sociauxIcon },
     { id: 'realisations', label: 'Mes réalisations', image: realisationIcon },
+    { id: 'spotify', label: 'U.B.E', image: spotifyIcon },
   ]);
   const [countdown, setCountdown] = useState(2);
   const [intervalId, setIntervalId] = useState(null);
@@ -38,17 +40,30 @@ const App = () => {
   const [showWelcome, setShowWelcome] = useState(true);
   const [runTour, setRunTour] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
+  const [volume, setVolume] = useState(50); // Ajout de l'état du volume
+  const [isPopupVisible, setIsPopupVisible] = useState(true);
+  const [isPopupMaximized, setIsPopupMaximized] = useState(false);
+
+  const handleMinimize = () => {
+    setIsPopupVisible(!isPopupVisible);
+  };
+  
+  const handleMaximize = () => {
+    setIsPopupMaximized(!isPopupMaximized);
+  };
 
   const contentMap = {
     github: { title: 'Mon GitHub', content: <p>Voici le lien vers mon GitHub.</p> },
     CV: { 
       title: 'Mon CV', 
       content: (
-        <embed
+        <iframe
           src="/portfolio/fichiers/CV_Olivier_BARBIN.pdf"
           type="application/pdf"
           width="100%"
           height="400px"
+          style={{ border: 'none' }}
+          title="CV"
         />
       ) 
     },
@@ -63,24 +78,30 @@ const App = () => {
     contact: { title: 'Me contacter', content: <ContactForm /> },
     sociaux: { title: 'Mes réseaux sociaux', content: <p>Liens vers mes réseaux sociaux.</p> },
     realisations: { title: 'Mes réalisations', content: <p>Liens vers mes dernières réalisations.</p> },
+    spotify: { title: 'Une breve écoute', content: <MusicPlayer volume={volume} /> }, // Passer le volume au MusicPlayer
   };
   
   const steps = [
     {
       target: '.desktop-icon',
       content: 'Voici vos icônes de bureau. Cliquez sur une icône pour ouvrir une application.',
+      disableBeacon: true,
     },
     {
       target: '.taskbar',
       content: 'Voici votre barre des tâches. Utilisez-la pour accéder rapidement aux applications.',
+      disableBeacon: true,
     },
     {
       target: '.taskbar-search',
       content: 'Utilisez la barre de recherche pour trouver rapidement des applications.',
+      disableBeacon: true,
     },
   ];
 
   const openPopup = (iconId) => {
+    setIsPopupVisible(true); // Réinitialise la visibilité de la popup à "visible"
+  
     if (iconId === 'github') {
       setCountdown(2);
       if (intervalId) {
@@ -156,6 +177,12 @@ const App = () => {
   };
 
   const filteredIcons = icons.filter(icon => icon.label.toLowerCase().includes(searchQuery));
+  
+  useEffect(() => {
+    if (!showWelcome) {
+      setRunTour(true); // Démarrer le tour après la fermeture de l'animation de bienvenue
+    }
+  }, [showWelcome]);
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -188,49 +215,8 @@ const App = () => {
                   padding: '20px',
                   maxWidth: '300px',
                 },
-                buttonNext: {
-                  backgroundColor: '#007bff',
-                  border: 'none',
-                  borderRadius: '4px',
-                  color: '#fff',
-                  cursor: 'pointer',
-                  padding: '8px 12px',
-                  fontSize: '14px',
-                },
-                buttonBack: {
-                  marginRight: '10px',
-                  color: '#007bff',
-                },
-                buttonSkip: {
-                  background: 'none',
-                  border: 'none',
-                  color: '#007bff',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                },
-                tooltip: {
-                  textAlign: 'left',
-                },
-                tooltipTitle: {
-                  fontSize: '18px',
-                  marginBottom: '10px',
-                },
-                tooltipContent: {
-                  fontSize: '14px',
-                  lineHeight: '1.5',
-                },
-                tooltipFooter: {
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  marginTop: '20px',
-                },
               }}
             />
-            <div className="start-tour-container">
-              <button onClick={() => setRunTour(true)} className="start-tour-button">
-                Démarrer la visite
-              </button>
-            </div>
             <div className="desktop">
               {filteredIcons.map((icon, index) => (
                 <DesktopIcon 
@@ -244,14 +230,22 @@ const App = () => {
                 />
               ))}
             </div>
-            {searchQuery && <SearchWindow query={searchQuery} onClose={() => setSearchQuery('')} />}
-            <Taskbar icons={filteredIcons} onIconClick={openPopup} onSearch={handleSearch} />
+            <Taskbar 
+              onIconClick={openPopup} 
+              onSearch={handleSearch} 
+              volume={volume} 
+              setVolume={setVolume} // Passe setVolume pour contrôler le volume
+            />
             {popup.isOpen && (
               <PopupWindow 
                 title={popup.title} 
                 content={popup.content} 
                 onClose={closePopup} 
                 initialPosition={popup.position}
+                onMinimize={handleMinimize}
+                onMaximize={handleMaximize}
+                isMaximized={isPopupMaximized}
+                isVisible={isPopupVisible} // Vérifie la visibilité ici
               />
             )}
           </>

@@ -1,70 +1,108 @@
 .popup-window {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
-  background-color: #f0f0f0;
-  border: none; /* Retire la bordure qui pourrait prendre de la place */
+  top: 50%;
+  left: 50%;
+  width: 600px; /* Largeur fixe pour le popup */
+  height: auto; /* Ajustement automatique pour la hauteur */
+  background-color: #ffffff; /* Couleur de fond blanche */
+  border-radius: 8px; /* Coins arrondis */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Ombre douce */
   z-index: 1000;
+  transform: translate(-50%, -50%); /* Centrage du popup */
   display: flex;
   flex-direction: column;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+.default-size {
+  max-height: 80vh; /* Hauteur maximale */
 
+
+}
 .popup-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #0078d7;
-  color: white;
-  padding: 10px;
-  border-bottom: 1px solid #a9a9a9;
+  background-color: #0078d7; /* Couleur de fond du header */
+  color: white; /* Couleur du texte */
+  padding: 10px 15px; /* Padding ajusté */
+  border-top-left-radius: 8px; /* Coins arrondis en haut à gauche */
+  border-top-right-radius: 8px; /* Coins arrondis en haut à droite */
+  border-bottom: 1px solid #a9a9a9; /* Bordure inférieure légère */
 }
 
 .popup-content {
-  flex-grow: 1; /* Assure que le contenu prend tout l’espace restant */
-  font-size: 14px;
-  color: #333;
-  overflow: auto; /* Le contenu défile si nécessaire */
-  text-align: center;
+  flex-grow: 1; /* Prend tout l’espace restant */
+  font-size: 14px; /* Taille de police standard */
+  color: #333; /* Couleur du texte */
+  overflow: auto; /* Défilement si nécessaire */
+  padding: 15px; /* Ajout de padding pour le contenu */
 }
 
 .popup-close-button {
-  background-color: #0078d7;
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 100%;
-  text-align: center;
+  background-color: #0078d7; /* Couleur de fond */
+  color: white; /* Couleur du texte */
+  border: none; /* Pas de bordure */
+  padding: 10px 15px; /* Padding ajusté */
+  cursor: pointer; /* Curseur de pointeur */
+  transition: background-color 0.3s; /* Transition douce */
+  border-radius: 4px; /* Coins légèrement arrondis */
 }
 
 .popup-close-button:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* Couleur plus foncée au survol */
+}
+
+/* Boutons pour minimiser, maximiser et fermer */
+.minimize-button,
+.maximize-button,
+.close-button {
+  background: none; /* Pas de fond */
+  border: none; /* Pas de bordure */
+  cursor: pointer; /* Curseur de pointeur */
+  font-size: 16px; /* Taille de police */
+  color: white; /* Couleur du texte */
+  padding: 5px; /* Padding autour des boutons */
+  transition: background-color 0.2s; /* Transition douce */
+}
+
+.minimize-button:hover,
+.maximize-button:hover,
+.close-button:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Légère teinte au survol */
+}
+
+.maximized {
+  width: 100vw; /* Prend toute la largeur */
+  height: 100vh; /* Prend toute la hauteur */
+  top: 0; /* Position supérieure */
+  left: 0; /* Position gauche */
+  border-radius: 0; /* Pas de coins arrondis */
+}
+
+/* Styles pour les boutons dans le header */
+.header-buttons {
+  display: flex; /* Aligne les boutons horizontalement */
+  gap: 5px; /* Espace entre les boutons */
+}
+
+/* Cacher le popup */
+.hidden {
+  display: none; /* Ne pas afficher le popup */
 }
 
 /* Responsive styles */
 @media (max-width: 768px) {
+  .popup-window {
+    width: 90vw; /* Largeur maximale sur mobile */
+    height: auto; /* Ajustement automatique pour la hauteur */
+  }
+
   .popup-header {
-    padding: 15px;
+    padding: 15px; /* Padding ajusté sur mobile */
   }
 
-  .popup-header button {
-    font-size: 20px;
-    padding: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .popup-header {
-    padding: 15px;
-  }
-
-  .popup-header button {
-    font-size: 24px;
-    padding: 20px;
+  .popup-close-button {
+    padding: 10px; /* Padding ajusté sur mobile */
   }
 }

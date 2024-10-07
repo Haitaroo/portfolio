@@ -12,7 +12,7 @@
   align-items: center;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
-  z-index: 1000; /* Assurer que la barre est au-dessus des autres éléments */
+  z-index: 1000;
 }
 
 .taskbar-left {
@@ -122,7 +122,7 @@
   .taskbar-search,
   .taskbar-time,
   .taskbar-right,
-  .weather-widget { /* Masquer la barre de recherche, le temps et le widget météo */
+  .weather-widget {
     display: none;
   }
 
@@ -132,7 +132,167 @@
   }
 
   .taskbar-icon img {
-    width: 35px; /* Tailles des icônes ajustées pour mobile */
+    width: 35px;
     height: 35px;
+  }
+}
+
+/* Styles pour les pop-ups */
+/* Styles pour le menu combiné */
+.combined-menu {
+  position: absolute;
+  bottom: 50px; /* Ajuste selon la hauteur de la taskbar */
+  right: 10px; /* Minimum 10px de l'écran */
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 2000; /* Assure que le menu est au-dessus des autres éléments */
+  display: flex;
+  flex-direction: column;
+}
+
+.wifi-section,
+.sound-section {
+  margin-bottom: 10px; /* Espace entre les sections */
+}
+
+.sound-section input[type="range"] {
+  width: 100%;
+}
+
+/* Assure que les popups soient bien positionnés même sur des petits écrans */
+@media (max-width: 768px) {
+  .wifi-menu, .sound-menu {
+    right: 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .taskbar-right .taskbar-icon {
+    display: none;
+  }
+}
+/* Combined menu styles */
+.combined-menu {
+  position: absolute;
+  bottom: 50px;
+  right: 10px; /* Ensures at least 10px from the right edge */
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 2000; /* Ensures the menu is above other elements */
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease; /* Animation for menu */
+}
+
+.wifi-section,
+.sound-section {
+  margin-bottom: 10px;
+}
+
+.menu-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #0078d7; /* Color for menu title */
+}
+
+/* Volume progress indicator */
+.volume-indicator {
+  height: 5px;
+  background-color: #0078d7; /* Color for volume indicator */
+  border-radius: 3px;
+  margin-top: 5px;
+}
+
+/* Hover effects */
+.taskbar-icon:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s;
+}
+
+/* Fade in animation for the combined menu */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Styles pour le bouton de déconnexion */
+.disconnect-button {
+  background-color: #ff4d4d; /* Couleur rouge pour le bouton de déconnexion */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.disconnect-button:hover {
+  background-color: #e60000; /* Couleur plus foncée au survol */
+}
+
+/* Styles pour l'indicateur de volume */
+.volume-indicator {
+  height: 5px;
+  background-color: #0078d7; /* Couleur bleue pour l'indicateur de volume */
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #f3f3f3;
+  padding: 5px 10px;
+  border-radius: 15px;
+  margin-right: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  transition: width 0.3s ease;
+}
+
+.search-bar:hover {
+  width: 350px;
+}
+
+.search-icon {
+  color: #5a5a5a;
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.search-input {
+  background-color: transparent;
+  border: none;
+  color: #333;
+  padding: 5px;
+  border-radius: 3px;
+  outline: none;
+  width: 100%;
+}
+
+.search-input::placeholder {
+  color: #888;
+}
+
+.search-input:focus {
+  background-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .search-bar {
+    display: none !important;
   }
 }

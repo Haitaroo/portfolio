@@ -6,5 +6,14 @@ export default defineConfig({
   base: "/portfolio/",
   define: {
     'process.env': process.env
-  }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://itunes.apple.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 });

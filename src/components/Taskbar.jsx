@@ -1,89 +1,114 @@
 import React, { useState } from 'react';
-import WeatherWidget from './WeatherWidget'; // Assurez-vous d'importer votre composant WeatherWidget
-import SearchBar from './SearchBar'; // Importez votre composant SearchBar
-import wifiIcon from '../assets/img/wifi.png'; // Chemin d'importation pour votre icône Wi-Fi
-import soundIcon from '../assets/img/son.png'; // Chemin d'importation pour votre icône son
+import WeatherWidget from './WeatherWidget';
+import SearchBar from './SearchBar';
+import wifiIcon from '../assets/img/wifi.png';
+import noWifiIcon from '../assets/img/nonWifi.png';
+import volumeLowIcon from '../assets/img/volumeBas.png';
+import volumeMediumIcon from '../assets/img/volumeMoyen.png';
+import volumeHighIcon from '../assets/img/volumeHaut.png';
+import volumeMuteIcon from '../assets/img/volumeNon.png';
 import './Taskbar.css';
 
-const Taskbar = ({ icons, onIconClick, onSearch }) => {
+const Taskbar = ({ icons = [], onIconClick, onSearch, volume, setVolume }) => {
   const [hoveredIcon, setHoveredIcon] = useState(null);
-  const [isWifiMenuOpen, setIsWifiMenuOpen] = useState(false);
-  const [isSoundMenuOpen, setIsSoundMenuOpen] = useState(false);
-  const [volume, setVolume] = useState(50); // Valeur initiale pour le volume
-  const [time] = useState(new Date()); // Remplacez par votre logique de gestion du temps
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [time] = useState(new Date());
+  const [isConnected, setIsConnected] = useState(false);
+  const [selectedNetwork, setSelectedNetwork] = useState(null);
+  const networks = ['Réseau 1', 'Réseau 2', 'Réseau 3']; // Liste de réseaux fictifs
 
-  const toggleWifiMenu = () => {
-    setIsWifiMenuOpen(prev => !prev);
-  };
-
-  const toggleSoundMenu = () => {
-    setIsSoundMenuOpen(prev => !prev);
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
   };
 
   const handleVolumeChange = (e) => {
-    setVolume(e.target.value);
+    setVolume(parseInt(e.target.value, 10));
   };
 
   const formatTime = (time) => {
-    return time.toLocaleTimeString(); // Formatez le temps selon vos besoins
+    return time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
+  const connectToNetwork = (network) => {
+    setSelectedNetwork(network);
+    setIsConnected(true);
+    toggleMenu(); // Fermer le menu après la connexion
+  };
+
+  const disconnectFromNetwork = () => {
+    setIsConnected(false);
+    setSelectedNetwork(null);
+    toggleMenu(); // Fermer le menu après la déconnexion
+  };
+
+  const getVolumeIcon = () => {
+    if (volume === 0) return volumeMuteIcon;
+    if (volume > 0 && volume <= 33) return volumeLowIcon;
+    if (volume > 33 && volume <= 66) return volumeMediumIcon;
+    return volumeHighIcon;
+  };
+
+  const getWifiIcon = () => {
+    return isConnected ? wifiIcon : noWifiIcon;
   };
 
   return (
     <div className="taskbar">
       <div className="taskbar-left">
         <WeatherWidget />
-        {/* Remplacez l'input par le composant SearchBar */}
-        <SearchBar 
-          placeholder="Recherche..." 
-          onChange={(e) => onSearch(e.target.value)} 
-        />
+        <SearchBar placeholder="Recherche..." onChange={(e) => onSearch(e.target.value)} />
       </div>
       <div className="taskbar-icons">
-        {icons.map(icon => (
-          <div 
-            key={icon.id} 
-            className="taskbar-icon" 
+        {Array.isArray(icons) && icons.map((icon) => (
+          <div
+            key={icon.id}
+            className="taskbar-icon"
             onClick={() => onIconClick(icon.id)}
             onMouseEnter={() => setHoveredIcon(icon.id)}
             onMouseLeave={() => setHoveredIcon(null)}
           >
             <img src={icon.image} alt={icon.label} />
-            {hoveredIcon === icon.id && (
-              <div className="tooltip">{icon.label}</div>
-            )}
+            {hoveredIcon === icon.id && <div className="tooltip">{icon.label}</div>}
           </div>
         ))}
       </div>
       <div className="taskbar-right">
-        <div className="taskbar-icon" onClick={toggleWifiMenu}>
-          <img src={wifiIcon} alt="Wi-Fi" />
-          {isWifiMenuOpen && (
-            <div className="wifi-menu">
-              <p>{isConnected ? 'Connecté' : 'Déconnecté'}</p>
-              <p>Réseaux disponibles :</p>
-              <ul>
-                <li>Réseau 1</li>
-                <li>Réseau 2</li>
-                <li>Réseau 3</li>
-              </ul>
-            </div>
-          )}
+        <div className="taskbar-icon" onClick={toggleMenu}>
+          <img src={getWifiIcon()} alt="Wi-Fi" />
         </div>
-        <div className="taskbar-icon" onClick={toggleSoundMenu}>
-          <img src={soundIcon} alt="Sound" />
-          {isSoundMenuOpen && (
-            <div className="sound-menu">
+        <div className="taskbar-icon" onClick={toggleMenu}>
+          <img src={getVolumeIcon()} alt="Son" />
+        </div>
+        {isMenuOpen && (
+          <div className="combined-menu" style={{ right: '10px' }}>
+            <div className="wifi-section">
+              <p className="menu-title">État de la connexion</p>
+              <p>{isConnected ? '✅ Connecté à ' + selectedNetwork : '❌ Déconnecté'}</p>
+              {isConnected ? (
+                <button onClick={disconnectFromNetwork} className="disconnect-button">
+                  Se déconnecter
+                </button>
+              ) : (
+                <>
+                  <p>Réseaux disponibles :</p>
+                  <ul>
+                    {networks.map((network) => (
+                      <li key={network} onClick={() => connectToNetwork(network)} style={{ cursor: 'pointer' }}>
+                        {network}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+            <div className="sound-section">
+              <p className="menu-title">Contrôle du volume</p>
               <p>Volume : {volume}%</p>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={volume}
-                onChange={handleVolumeChange}
-              />
+              <input type="range" min="0" max="100" value={volume} onChange={handleVolumeChange} />
+              <div className="volume-indicator" style={{ width: `${volume}%` }} />
             </div>
-          )}
-        </div>
+          </div>
+        )}
         <div className="taskbar-time">
           <span>{formatTime(time)}</span>
           <span>{time.toLocaleDateString()}</span>
