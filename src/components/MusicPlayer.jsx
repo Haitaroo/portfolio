@@ -72,11 +72,13 @@ const MusicPlayer = ({ volume, setVolume }) => {
   };
 
   const handleVolumeChange = (e) => {
-    const newVolume = parseInt(e.target.value, 10);
-    setVolume(newVolume);
+    const volume = parseInt(e.target.value, 10);
+    setVolume(volume);
     if (audioRef.current) {
-      audioRef.current.volume = newVolume / 100;
+      audioRef.current.volume = volume / 100;
     }
+    document.querySelector("input[type=range]").value = audioRef.current.volume;
+
   };
 
   const handleAudioEnded = () => {
@@ -112,13 +114,7 @@ const MusicPlayer = ({ volume, setVolume }) => {
             </div>
           </div>
           <div className="volume-control">
-            <input 
-              type="range" 
-              min="0" 
-              max="100" 
-              value={volume} 
-              onChange={handleVolumeChange} 
-            />
+          <input type="range" min="0" max="100" value={volume} onChange={handleVolumeChange} />
             <span>{volume}%</span>
           </div>
         </div>

@@ -2,7 +2,7 @@
 import React from 'react';
 import PopupWindow from './PopupWindow';
 
-const PopupManager = ({ popup, isPopupVisible, isPopupMaximized, closePopup, handleMinimize, handleMaximize }) => {
+const PopupManager = ({ volume, setVolume, popup, isPopupVisible, isPopupMaximized, closePopup, handleMinimize, handleMaximize }) => {
   return (
     <>
       {popup.isOpen && (
@@ -15,6 +15,8 @@ const PopupManager = ({ popup, isPopupVisible, isPopupMaximized, closePopup, han
           onMaximize={handleMaximize}
           isMaximized={isPopupMaximized}
           isVisible={isPopupVisible}
+          volume={volume}
+          setVolume={setVolume}
         />
       )}
     </>

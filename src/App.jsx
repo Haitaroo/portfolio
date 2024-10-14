@@ -193,6 +193,13 @@ const App = () => {
           <>
             <Joyride
               steps={steps}
+              locale={{
+                back: 'Retour',   // Traduction pour "Back"
+                close: 'Fermer',  // Traduction pour "Close"
+                last: 'Terminer', // Traduction pour "Last"
+                next: 'Suivant',  // Traduction pour "Next"
+                skip: 'Passer',   // Traduction pour "Skip"
+              }}
               continuous={true}
               showSkipButton={true}
               run={runTour}
