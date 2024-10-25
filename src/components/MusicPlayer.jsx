@@ -5,6 +5,7 @@ const MusicPlayer = ({ volume, setVolume }) => {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [tracks, setTracks] = useState([]);
+  const [volumeState, setVolumeState] = useState(volume); // État local pour gérer le volume
   const [error, setError] = useState(null);
   const audioRef = useRef(null);
 
@@ -38,10 +39,10 @@ const MusicPlayer = ({ volume, setVolume }) => {
             setTracks(uniqueTracks.slice(0, 10));
           }
         } else {
-          throw new Error('Invalid response format');
+          throw new Error('Format de réponse invalide');
         }
       } catch (err) {
-        setError('Failed to fetch tracks. Please try again later.');
+        setError('Impossible de récuperer les musiques. Merci de rééssayer plus tard.');
         console.error(err);
       }
     };
@@ -51,9 +52,9 @@ const MusicPlayer = ({ volume, setVolume }) => {
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = volume / 100;
+      audioRef.current.volume = volumeState / 100;
     }
-  }, [volume]);
+  }, [volumeState]);
 
   const playTrack = (track) => {
     if (currentTrack && currentTrack.trackId === track.trackId) {
@@ -72,13 +73,11 @@ const MusicPlayer = ({ volume, setVolume }) => {
   };
 
   const handleVolumeChange = (e) => {
-    const volume = parseInt(e.target.value, 10);
-    setVolume(volume);
+    const newVolume = parseInt(e.target.value, 10);
+    setVolumeState(newVolume);
     if (audioRef.current) {
-      audioRef.current.volume = volume / 100;
+      audioRef.current.volume = newVolume / 100;
     }
-    document.querySelector("input[type=range]").value = audioRef.current.volume;
-
   };
 
   const handleAudioEnded = () => {
@@ -114,8 +113,8 @@ const MusicPlayer = ({ volume, setVolume }) => {
             </div>
           </div>
           <div className="volume-control">
-          <input type="range" min="0" max="100" value={volume} onChange={handleVolumeChange} />
-            <span>{volume}%</span>
+            <input type="range" min="0" max="100" value={volumeState} onChange={handleVolumeChange} />
+            <span>{volumeState}%</span>
           </div>
         </div>
       )}
@@ -127,4 +126,4 @@ const MusicPlayer = ({ volume, setVolume }) => {
   );
 };
 
-export default MusicPlayer; 
+export default MusicPlayer;

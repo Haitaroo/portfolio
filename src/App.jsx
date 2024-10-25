@@ -9,6 +9,7 @@ import ContactForm from './components/ContactForm.jsx';
 import Notepad from './components/Notepad';
 import WindowsWelcome from './components/WindowsWelcome';
 import MusicPlayer from './components/MusicPlayer';
+import GithubProgress from './components/GithubProgress';
 
 import './App.css';
 import githubIcon from './assets/img/github.png';
@@ -19,6 +20,7 @@ import sociauxIcon from './assets/img/sociaux.png';
 import realisationIcon from './assets/img/realisations.png';
 import olivierPhoto from './assets/img/olivier.png';
 import spotifyIcon from './assets/img/30secplayer.png';
+import SocialMedia from './components/SocialMedia.jsx';
 
 const App = () => {
   const [popup, setPopup] = useState({ isOpen: false, title: '', content: null, position: { top: 100, left: 100 } });
@@ -76,8 +78,8 @@ const App = () => {
       ) 
     },
     contact: { title: 'Me contacter', content: <ContactForm /> },
-    sociaux: { title: 'Mes réseaux sociaux', content: <p>Liens vers mes réseaux sociaux.</p> },
-    realisations: { title: 'Mes réalisations', content: <p>Liens vers mes dernières réalisations.</p> },
+    sociaux: { title: 'Mes réseaux sociaux', content: <SocialMedia /> },
+    realisations: { title: 'Mes réalisations', content: <GithubProgress username="Haitaroo" /> },
     spotify: { title: 'Une breve écoute', content: <MusicPlayer volume={volume} setVolume={setVolume} /> }, // Passer setVolume ici
   };
   
@@ -103,7 +105,6 @@ const App = () => {
     setIsPopupVisible(true);
   
     if (iconId === 'github') {
-      setCountdown(2);
       if (intervalId) {
         clearInterval(intervalId);
       }
@@ -111,24 +112,13 @@ const App = () => {
       setPopup({
         isOpen: true,
         title: 'Redirection vers GitHub',
-        content: <p>Direction vers mon GitHub dans 2 secondes...</p>,
+        content: <p>Direction vers mon GitHub...</p>,
         position: { top: window.innerHeight / 2 - 100, left: window.innerWidth / 2 - 200 }
       });
-  
-      const newIntervalId = setInterval(() => {
-        setCountdown(prevCountdown => {
-          if (prevCountdown === 1) {
-            clearInterval(newIntervalId);
-            window.open('https://github.com/Haitaroo/', '_blank');
-            setPopup({ isOpen: false, title: '', content: null, position: { top: 0, left: 100 } });
-            setCountdown(2);
-          }
-          return prevCountdown - 1;
-        });
-      }, 1000);
-  
-      setIntervalId(newIntervalId);
-      return;
+      
+      window.open('https://github.com/Haitaroo/', '_blank');
+      setPopup({ isOpen: false, title: '', content: null, position: { top: 0, left: 100 } });
+      return; // Add return to prevent further execution
     }
   
     if (iconId === 'CV') {
@@ -188,6 +178,7 @@ const App = () => {
     <DndProvider backend={HTML5Backend}>
       <div className="app">
         {showWelcome ? (
+          // Show WindowsWelcome screen until user clicks "Sign In"
           <WindowsWelcome onClose={() => setShowWelcome(false)} />
         ) : (
           <>

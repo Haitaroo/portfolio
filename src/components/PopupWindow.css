@@ -4,6 +4,7 @@
   left: 50%;
   width: 600px; /* Largeur fixe pour le popup */
   height: auto; /* Ajustement automatique pour la hauteur */
+  max-height: calc(100vh - 20px); /* Empêche la hauteur de dépasser la taille de l'écran */
   background-color: #ffffff; /* Couleur de fond blanche */
   border-radius: 8px; /* Coins arrondis */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Ombre douce */
@@ -13,12 +14,13 @@
   flex-direction: column;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden; /* Assure que le contenu ne déborde pas */
 }
+
 .default-size {
   max-height: 80vh; /* Hauteur maximale */
-
-
 }
+
 .popup-header {
   display: flex;
   justify-content: space-between;
@@ -29,6 +31,13 @@
   border-top-left-radius: 8px; /* Coins arrondis en haut à gauche */
   border-top-right-radius: 8px; /* Coins arrondis en haut à droite */
   border-bottom: 1px solid #a9a9a9; /* Bordure inférieure légère */
+  position: sticky;
+  top: 0;
+  z-index: 10; /* Garde le header visible lors du défilement */
+}
+
+.popup-title {
+  flex-grow: 1; /* Prend l'espace disponible pour pousser les boutons vers la droite */
 }
 
 .popup-content {
@@ -36,7 +45,6 @@
   font-size: 14px; /* Taille de police standard */
   color: #333; /* Couleur du texte */
   overflow: auto; /* Défilement si nécessaire */
-  padding: 15px; /* Ajout de padding pour le contenu */
 }
 
 .popup-close-button {
@@ -62,14 +70,26 @@
   cursor: pointer; /* Curseur de pointeur */
   font-size: 16px; /* Taille de police */
   color: white; /* Couleur du texte */
-  padding: 5px; /* Padding autour des boutons */
+  width: 24px; /* Largeur du bouton similaire à Windows */
+  height: 24px; /* Hauteur du bouton similaire à Windows */
+  display: flex; /* Flexbox pour centrer l'icône */
+  align-items: center; /* Centre verticalement */
+  justify-content: center; /* Centre horizontalement */
   transition: background-color 0.2s; /* Transition douce */
+}
+
+.minimize-button::before {
+  content: "_"; /* Représente le bouton minimiser de Windows */
+  font-size: 18px; /* Taille du trait de minimisation */
+  line-height: 0;
+  padding-bottom: 20%;
 }
 
 .minimize-button:hover,
 .maximize-button:hover,
 .close-button:hover {
   background-color: rgba(255, 255, 255, 0.2); /* Légère teinte au survol */
+  border-radius: 3px; /* Coins légèrement arrondis pour le style Windows */
 }
 
 .maximized {
@@ -82,7 +102,8 @@
 
 /* Styles pour les boutons dans le header */
 .header-buttons {
-  display: flex; /* Aligne les boutons horizontalement */
+  display: flex; /* Utilise Flexbox pour aligner les boutons horizontalement */
+  align-items: center; /* Aligne les boutons verticalement au centre */
   gap: 5px; /* Espace entre les boutons */
 }
 

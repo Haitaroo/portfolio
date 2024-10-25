@@ -1,0 +1,17 @@
+.social-media {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .social-icon {
+    font-size: 2rem;
+    color: #000;
+    transition: color 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    color: #0077b5; /* Couleur par défaut, mais peut changer en fonction de l'icône */
+  }
+  
