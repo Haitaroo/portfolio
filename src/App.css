@@ -101,9 +101,7 @@ body {
 .popup-content {
   flex-grow: 1; /* Takes up remaining space */
   font-size: 14px; /* Standard font size */
-  color: #333; /* Text color */
-  padding: 15px; /* Added padding */
-}
+  color: #333; /* Text color */}
 
 /* Button styles */
 .popup-close-button,

@@ -73,3 +73,7 @@
       box-shadow: none; /* Pas d'ombre sur mobile */
   }
 }
+
+.rpv-core__inner-pages--vertical {
+  height: auto !important;
+}

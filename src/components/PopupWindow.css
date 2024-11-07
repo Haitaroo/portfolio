@@ -41,6 +41,7 @@
 }
 
 .popup-content {
+background-color: #e0e0e0;
   flex-grow: 1; /* Prend tout l’espace restant */
   font-size: 14px; /* Taille de police standard */
   color: #333; /* Couleur du texte */

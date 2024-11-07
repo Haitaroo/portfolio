@@ -5,11 +5,12 @@ import Joyride from 'react-joyride';
 import Taskbar from './components/Taskbar';
 import DesktopIcon from './components/DesktopIcon';
 import PopupWindow from './components/PopupWindow';
-import ContactForm from './components/ContactForm.jsx';
+import ContactForm from './components/ContactForm';
 import Notepad from './components/Notepad';
 import WindowsWelcome from './components/WindowsWelcome';
 import MusicPlayer from './components/MusicPlayer';
 import GithubProgress from './components/GithubProgress';
+import CV from './components/CV';
 
 import './App.css';
 import githubIcon from './assets/img/github.png';
@@ -45,6 +46,7 @@ const App = () => {
   const [volume, setVolume] = useState(50);
   const [isPopupVisible, setIsPopupVisible] = useState(true);
   const [isPopupMaximized, setIsPopupMaximized] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(true); // Ajout pour contrôler l'affichage de la tooltip
 
   const handleMinimize = () => {
     setIsPopupVisible(!isPopupVisible);
@@ -59,14 +61,7 @@ const App = () => {
     CV: { 
       title: 'Mon CV', 
       content: (
-        <iframe
-          src="/portfolio/fichiers/CV_Olivier_BARBIN.pdf"
-          type="application/pdf"
-          width="100%"
-          height="400px"
-          style={{ border: 'none' }}
-          title="CV"
-        />
+        <CV/>
       ) 
     },
     info: { 
@@ -80,7 +75,7 @@ const App = () => {
     contact: { title: 'Me contacter', content: <ContactForm /> },
     sociaux: { title: 'Mes réseaux sociaux', content: <SocialMedia /> },
     realisations: { title: 'Mes réalisations', content: <GithubProgress username="Haitaroo" /> },
-    spotify: { title: 'Une breve écoute', content: <MusicPlayer volume={volume} setVolume={setVolume} /> }, // Passer setVolume ici
+    spotify: { title: 'Une breve écoute', content: <MusicPlayer volume={volume} setVolume={setVolume} /> },
   };
   
   const steps = [
@@ -118,7 +113,7 @@ const App = () => {
       
       window.open('https://github.com/Haitaroo/', '_blank');
       setPopup({ isOpen: false, title: '', content: null, position: { top: 0, left: 100 } });
-      return; // Add return to prevent further execution
+      return;
     }
   
     if (iconId === 'CV') {
@@ -126,13 +121,7 @@ const App = () => {
         isOpen: true,
         title: 'Mon CV',
         content: (
-          <iframe
-            src="/portfolio/fichiers/CV_Olivier_BARBIN.pdf"
-            width="100%"
-            height="1000px"
-            style={{ border: 'none' }}
-            title="CV"
-          />
+          <CV/>
         ),
         position: { top: window.innerHeight / 2 - 250, left: window.innerWidth / 2 - 200 }
       });
@@ -178,23 +167,24 @@ const App = () => {
     <DndProvider backend={HTML5Backend}>
       <div className="app">
         {showWelcome ? (
-          // Show WindowsWelcome screen until user clicks "Sign In"
           <WindowsWelcome onClose={() => setShowWelcome(false)} />
         ) : (
           <>
             <Joyride
               steps={steps}
               locale={{
-                back: 'Retour',   // Traduction pour "Back"
-                close: 'Fermer',  // Traduction pour "Close"
-                last: 'Terminer', // Traduction pour "Last"
-                next: 'Suivant',  // Traduction pour "Next"
-                skip: 'Passer',   // Traduction pour "Skip"
+                back: 'Retour',
+                close: 'Fermer',
+                last: 'Terminer',
+                next: 'Suivant',
+                skip: 'Passer',
               }}
               continuous={true}
               showSkipButton={true}
               run={runTour}
               stepIndex={stepIndex}
+              hideCloseButton={true}
+
               callback={(data) => {
                 const { action, index, type } = data;
                 if (type === 'step:after' || type === 'target:notFound') {
@@ -202,10 +192,15 @@ const App = () => {
                 } else if (type === 'tour:end') {
                   setRunTour(false);
                   setStepIndex(0);
+                } else if (type === 'step:close') {
+                  setRunTour(false);
+                  setStepIndex(0);
+                  setShowTooltip(false); // Masque la tooltip
                 }
               }}
               styles={{
-                options: {
+                tooltip: {
+                  display: showTooltip ? 'block' : 'none', // Utilisation de showTooltip
                   zIndex: 10000,
                   backgroundColor: '#fff',
                   borderRadius: '8px',
@@ -214,6 +209,7 @@ const App = () => {
                   maxWidth: '300px',
                 },
               }}
+              
             />
             <div className="desktop">
               {filteredIcons.map((icon, index) => (
@@ -253,5 +249,6 @@ const App = () => {
     </DndProvider>
   );
 };
+
 
 export default App;

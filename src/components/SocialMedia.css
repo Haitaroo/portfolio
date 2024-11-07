@@ -1,17 +1,61 @@
-.social-media {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .social-icon {
-    font-size: 2rem;
-    color: #000;
-    transition: color 0.3s ease;
-  }
-  
-  .social-icon:hover {
-    color: #0077b5; /* Couleur par défaut, mais peut changer en fonction de l'icône */
-  }
-  
+.social-media-popup {
+  text-align: center;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f3f3f3;
+}
+
+.social-header h2 {
+  color: #0078d7;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.social-header p {
+  color: #555;
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.social-icons a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.1);
+  color: #0078d7;
+}
+
+.social-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.github {
+  color: #333;
+}
+
+.linkedin {
+  color: #0077b5;
+}
+
+.instagram {
+  color: #e1306c;
+}
+
+span {
+  font-size: 14px;
+  font-weight: 500;
+}

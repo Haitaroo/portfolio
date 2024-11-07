@@ -29,6 +29,7 @@
 }
 
 .taskbar-search {
+  margin-left: 20px;
   margin-left: 10px;
   padding: 5px 10px;
   border: 1px solid #ccc;
@@ -140,6 +141,7 @@
 /* Styles pour les pop-ups */
 /* Styles pour le menu combiné */
 .combined-menu {
+  color: #000;
   position: absolute;
   bottom: 50px; /* Ajuste selon la hauteur de la taskbar */
   right: 10px; /* Minimum 10px de l'écran */

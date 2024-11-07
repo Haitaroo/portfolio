@@ -36,9 +36,10 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
   margin-bottom: 20px;
 }
+
 
 .welcome-text {
   font-size: 24px;
@@ -136,3 +137,32 @@
   transform: scale(1.1);
   border-color: #0078d7;
 }
+/* Mode veille */
+.sleep-mode {
+  background-color: black; /* Écran sombre */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sleep-mode-text {
+  font-size: 1.5rem;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border: 2px solid white;
+  border-radius: 10px;
+  cursor: pointer;
+  animation: fadeIn 1s infinite alternate;
+}
+
+/* Animation de fondu pour l'invite "Glisser pour allumer" */
+@keyframes fadeIn {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+

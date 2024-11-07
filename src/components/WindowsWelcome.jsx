@@ -15,12 +15,13 @@ const WindowsWelcome = ({ onClose }) => {
   const [currentLogo, setCurrentLogo] = useState(logo);
   const [iconColor, setIconColor] = useState("black");
   const [textColor, setTextColor] = useState("black");
+  const [isShuttingDown, setIsShuttingDown] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoadingComplete(true);
-      setCurrentLogo(logo2); // Change the logo after loading is complete
-    }, 3000); // Le temps de chargement de la barre (3 secondes)
+      setCurrentLogo(logo2); // Change le logo après le chargement
+    }, 3000); // Temps de chargement de la barre (3 secondes)
 
     return () => clearTimeout(timer);
   }, []);
@@ -31,7 +32,7 @@ const WindowsWelcome = ({ onClose }) => {
 
   const handleBackgroundChange = (newBackground) => {
     setBackgroundImage(newBackground);
-    setShowSettings(false); // Fermez le menu après avoir choisi une nouvelle image
+    setShowSettings(false); // Ferme le menu après avoir choisi une nouvelle image
   };
 
   const checkBackgroundContrast = () => {
@@ -63,7 +64,6 @@ const WindowsWelcome = ({ onClose }) => {
       const bAvg = bTotal / count;
       const brightness = (rAvg * 299 + gAvg * 587 + bAvg * 114) / 1000;
 
-      // Si la luminosité est inférieure à 128, alors l'arrière-plan est sombre, utiliser des icônes blanches.
       setIconColor(brightness < 128 ? "white" : "black");
       setTextColor(brightness < 128 ? "white" : "black");
     };
@@ -73,9 +73,14 @@ const WindowsWelcome = ({ onClose }) => {
     return background.split('/').pop().split('.')[0];
   };
 
+  const handleShutdown = () => {
+    setIsShuttingDown(true);
+    setTimeout(onClose, 2000); // Simule un arrêt avec un délai de 2 secondes
+  };
+
   return (
     <div
-      className="welcome-screen"
+      className={`welcome-screen ${isShuttingDown ? 'shutdown' : ''}`}
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className="background-image"></div>
@@ -83,7 +88,7 @@ const WindowsWelcome = ({ onClose }) => {
         <div className="welcome-logo">
           <img src={currentLogo} alt="Logo" />
         </div>
-        {loadingComplete ? (
+        {loadingComplete && !isShuttingDown ? (
           <>
             <div className="welcome-text">Bienvenue</div>
             <button className="connect-button" onClick={onClose} style={{ color: textColor }}>
@@ -91,27 +96,29 @@ const WindowsWelcome = ({ onClose }) => {
             </button>
           </>
         ) : (
-          <>
-            <div className="welcome-text">Chargement...</div>
-            <div className="loading-bar">
-              <div className="loading-bar-fill"></div>
-            </div>
-          </>
+          !isShuttingDown && (
+            <>
+              <div className="welcome-text">Chargement...</div>
+              <div className="loading-bar">
+                <div className="loading-bar-fill"></div>
+              </div>
+            </>
+          )
         )}
       </div>
+
+      {isShuttingDown && (
+        <div className="shutdown-screen">
+          <p>Arrêt en cours...</p>
+        </div>
+      )}
+
       <div className="power-settings">
         <img
           src={settingsIcon}
           alt="Settings"
           className="settings-icon"
           onClick={() => setShowSettings(!showSettings)}
-          style={{ filter: iconColor === "white" ? "invert(100%)" : "none" }}
-        />
-        <img
-          src={powerIcon}
-          alt="Power"
-          className="power-icon"
-          onClick={onClose}
           style={{ filter: iconColor === "white" ? "invert(100%)" : "none" }}
         />
       </div>
@@ -127,7 +134,7 @@ const WindowsWelcome = ({ onClose }) => {
                 style={{ backgroundImage: `url(${background})` }}
                 onClick={() => handleBackgroundChange(background)}
               >
-                <p style={{ color: textColor }}>{backgroundName.charAt(0).toUpperCase() + backgroundName.slice(1)}</p> {/* Affiche le nom du fond */}
+                <p style={{ color: textColor }}>{backgroundName.charAt(0).toUpperCase() + backgroundName.slice(1)}</p>
               </div>
             );
           })}
